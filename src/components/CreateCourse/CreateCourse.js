@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import TableNews from '../TableNews/TableNews';
+import TableCourse from '../TableCourse/TableCourse';
 
 
 class CreateCourse extends Component {
@@ -9,7 +9,7 @@ class CreateCourse extends Component {
         super(props)
         this.setStateOfParent.bind(this);
         this.state = {
-            news: [],
+            courses: [],
             name: "",
             status: ""
         }
@@ -20,9 +20,9 @@ class CreateCourse extends Component {
             e.preventDefault();
             const date = new Date();
             const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-            const data = { "title": e.target.title.value, "description": e.target.description.value, "date": `${day}/${month}/${year}`, "postedBy": "Ivan" };
-
-            fetch('https://system-school-7931c-default-rtdb.firebaseio.com/news.json', {
+            const data = { "title": e.target.title.value, "program": e.target.program.value, "date": `${day}/${month}/${year}`, "createdBy": "Ivan"};
+            console.log(data)
+;            fetch('https://system-school-7931c-default-rtdb.firebaseio.com/courses.json', {
                 method: 'POST', // or 'PUT'
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ class CreateCourse extends Component {
             })
                 .then(response => response.json())
                 .then(item => {
-                    this.setState({news: [...this.state.news,{...data,"id":item.name} ]});
+                    this.setState({courses: [...this.state.courses,{...data,"id":item.name} ]});
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -45,21 +45,23 @@ class CreateCourse extends Component {
 
 
     componentDidMount() {
-        fetch("https://system-school-7931c-default-rtdb.firebaseio.com/news.json")
+        
+        fetch("https://system-school-7931c-default-rtdb.firebaseio.com/courses.json")
             .then(res => res.json())
-            .then(items => {
+            .then(items => { 
+                console.log(items)
                 const array = [];
 
                 Object.keys(items).forEach((key) => {
                     array.push({ "id": [key][0], ...items[key] });
                 });
-                this.setState({news: array })
+                this.setState({courses: array })
             })
     }
 
     setStateOfParent = (id) => {
-        console.log(this.state.news)
-        this.setState({ news: this.state.news.filter(item => item.id != id) });
+        console.log(this.state.courses)
+        this.setState({ courses: this.state.courses.filter(item => item.id != id) });
 
     }
 
@@ -71,41 +73,44 @@ class CreateCourse extends Component {
             <>
                 <main>
 
-                    <div>Create News</div>
+                    <div>Create Course</div>
 
                     <form onSubmit={this.onSubmitHandler} htmlFor="form">
 
                         <label htmlFor="title"><b>Title: </b></label>
                         <input type="text" placeholder="Enter Title" name="title" required />
 
-                        <label htmlFor="description"><b>Description: </b></label>
-                        <textarea name="description" placeholder="Enter text here..." required></textarea>
+                        <label htmlFor="program"><b>Program: </b></label>
+                        <textarea name="program" placeholder="Enter text here..." required></textarea>
 
-                        <button type="submit" name="button">Post</button>
+                        <button type="submit" name="button">Create</button>
 
 
                     </form>
 
-                    <div>All posted news</div>
+                    <div>All created course</div>
 
                     <table>
                         <thead>
                             <tr>
                                 <th>Title</th>
                                 <th>Date</th>
+                                <th>Program</th>
+                                <th>Subscribers</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                this.state.news?.map((item) =>
-                                    <TableNews
+                                this.state.courses?.map((item) =>
+                                    <TableCourse
                                         key={item.id}
                                         name={item.id}
                                         title={item.title}
                                         date={item.date}
+                                        program = {item.program}
                                         setStateOfParent={this.setStateOfParent}
-                                    ></TableNews>
+                                    ></TableCourse>
 
                                 )}
                         </tbody>
@@ -190,4 +195,4 @@ class CreateCourse extends Component {
     }
 }
 
-export default News;
+export default CreateCourse;

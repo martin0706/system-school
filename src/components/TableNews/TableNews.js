@@ -27,7 +27,7 @@ class TableNews extends Component {
                     <td>{this.props.date}</td>
                     <td>
                         <NavLink to={`/news/details/${this.props.name}`}><button className="detailsBtn">Details</button></NavLink>
-                        <button className="deleteBtn" onClick={this.handleClick} onClick = {e=> e.preventDefault()}>Delete</button>
+                        <button className="deleteBtn" onClick={this.handleClick} >Delete</button>
                     </td>
                 </tr>
 
