@@ -1,32 +1,37 @@
+import { render } from '@testing-library/react';
+import { Component } from 'react';
 
+class TableNews extends Component {
 
-const TableNews = (props) => {
-
-    let handleClick = (e) => {
-        e.preventDefault();
-        console.log(props.news);
-        fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/news/${props.name}.json`, { method: 'DELETE' })
-            .then(res => res.json()) // or res.json()
-            .then(res => console.log(res))
-
+    constructor(props) {
+        super(props)
+       
+        this.handleClick.bind(this)
     }
 
+    handleClick = (e) => {
+        e.preventDefault();
+        console.log(this.props.news);
+        fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/news/${this.props.name}.json`, { method: 'DELETE' })
+            .then(res => res.json()) // or res.json()
+            this.props.setStateOfParent(this.props.name);
+    }
 
+    render() {
+        return (
+            <>
 
-    return (
-        <>
+                <tr>
+                    <td>{this.props.title}</td>
+                    <td>{this.props.date}</td>
+                    <td>
+                        <button className="detailsBtn" onClick={this.handleClick}>Details</button>
+                        <button className="deleteBtn" onClick={this.handleClick} >Delete</button>
+                    </td>
+                </tr>
 
-            <tr>
-                <td>{props.title}</td>
-                <td>{props.date}</td>
-                <td>
-                    <button className="detailsBtn" onClick={handleClick}>Details</button>
-                    <button className="deleteBtn" onClick={handleClick} >Delete</button>
-                </td>
-            </tr>
-
-            <style jsx>
-                {`
+                <style jsx>
+                    {`
 
                     table {
                         border-collapse: collapse;
@@ -59,9 +64,10 @@ const TableNews = (props) => {
                         background-color:red;
                       }
               `}
-            </style>
-        </>
-    );
+                </style>
+            </>
+        );
+    }
 
 };
 

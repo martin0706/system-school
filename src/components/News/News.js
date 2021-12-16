@@ -7,7 +7,7 @@ class News extends Component {
 
     constructor(props) {
         super(props)
-
+        this.setStateOfParent.bind(this);
         this.state = {
             news: [],
             name: "",
@@ -15,11 +15,12 @@ class News extends Component {
         }
 
 
+
         this.onSubmitHandler = (e) => {
             e.preventDefault();
             const date = new Date();
             const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-            const data = { "title": e.target.title.value, "description": e.target.description.value, "date": `${day}/${month}/${year}`, "postedBy": "Ivan"};
+            const data = { "title": e.target.title.value, "description": e.target.description.value, "date": `${day}/${month}/${year}`, "postedBy": "Ivan" };
 
             fetch('https://system-school-7931c-default-rtdb.firebaseio.com/news.json', {
                 method: 'POST', // or 'PUT'
@@ -30,28 +31,39 @@ class News extends Component {
             })
                 .then(response => response.json())
                 .then(item => {
-                   this.setState(this.state.news[item.name] = data);
-                    console.log('Success:', item);
+                    this.setState({news: [...this.state.news,{...data,"id":item.name} ]});
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-                e.target.reset();       
-            }
-         
+            e.target.reset();
+        }
+
+
+
     }
 
 
     componentDidMount() {
         fetch("https://system-school-7931c-default-rtdb.firebaseio.com/news.json")
             .then(res => res.json())
-            .then(news => {
-                this.setState(() => ({ news }))
+            .then(items => {
+                const array = [];
+
+                Object.keys(items).forEach((key) => {
+                    array.push({ "id": [key][0], ...items[key] });
+                });
+                this.setState({news: array })
             })
     }
 
+    setStateOfParent = (id) => {
+        console.log(this.state.news)
+        this.setState({ news: this.state.news.filter(item => item.id != id) });
 
-   
+    }
+
+
 
 
     render() {
@@ -67,7 +79,7 @@ class News extends Component {
                         <input type="text" placeholder="Enter Title" name="title" required />
 
                         <label htmlFor="description"><b>Description: </b></label>
-                        <textarea name="description" placeholder="Enter text here..."></textarea>
+                        <textarea name="description" placeholder="Enter text here..." required></textarea>
 
                         <button type="submit" name="button">Post</button>
 
@@ -86,12 +98,13 @@ class News extends Component {
                         </thead>
                         <tbody>
                             {
-                           Object.keys(this.state.news)?.map((key) =>
+                                this.state.news?.map((item) =>
                                     <TableNews
-                                        key={key}
-                                        name = {key}
-                                        title={this.state.news[key].title}
-                                        date={this.state.news[key].date}
+                                        key={item.id}
+                                        name={item.id}
+                                        title={item.title}
+                                        date={item.date}
+                                        setStateOfParent={this.setStateOfParent}
                                     ></TableNews>
 
                                 )}
