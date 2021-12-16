@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-class TableCourses extends Component {
+class TableCourseTheacher extends Component {
 
     constructor(props) {
         super(props)
@@ -41,7 +41,7 @@ class TableCourses extends Component {
                         color:black;
                     }
 
-                    td, th {
+                    td{
                         border: 1px solid #dddddd;
                         text-align: left;
                         padding: 8px;
@@ -77,4 +77,4 @@ class TableCourses extends Component {
 
 };
 
-export default TableCourses;
+export default TableCourseTheacher;

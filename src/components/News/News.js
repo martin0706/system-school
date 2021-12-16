@@ -11,7 +11,8 @@ class News extends Component {
         this.state = {
             news: [],
             name: "",
-            status: ""
+            status: "",
+            hasNews: false,
         }
 
 
@@ -31,7 +32,7 @@ class News extends Component {
             })
                 .then(response => response.json())
                 .then(item => {
-                    this.setState({news: [...this.state.news,{...data,"id":item.name} ]});
+                    this.setState({ news: [...this.state.news, { ...data, "id": item.name }] });
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -49,12 +50,14 @@ class News extends Component {
             .then(res => res.json())
             .then(items => {
                 const array = [];
-
-                Object.keys(items).forEach((key) => {
-                    array.push({ "id": [key][0], ...items[key] });
-                });
-                this.setState({news: array })
+                if (items) {
+                    Object.keys(items).forEach((key) => {
+                        array.push({ "id": [key][0], ...items[key] });
+                    });
+                    this.setState({ news: array, hasNews: true })
+                }
             })
+
     }
 
     setStateOfParent = (id) => {
@@ -63,10 +66,9 @@ class News extends Component {
 
     }
 
-
-
-
     render() {
+
+
         return (
             <>
                 <main>
@@ -115,6 +117,23 @@ class News extends Component {
 
                 <style jsx>
                     {`
+
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                        color:black;
+                    }
+
+                    td, th {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 8px;
+                    }
+
+                    tr:nth-child(even) {
+                        background-color: #dddddd;
+                    }
+
                
                main {
                     text-align: center;

@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import TableCourseTheacher from '../TableCourseTheacher/TableCourseTheacher';
+import TableCourseStudent from '../TableCourseStudent/TableCourseStudent';
+import OptionCourses from "../OptionCourses/OptionCourses";
 
-
-class CreateCourse extends Component {
+class Courses extends Component {
 
 
     constructor(props) {
@@ -11,7 +11,8 @@ class CreateCourse extends Component {
         this.state = {
             courses: [],
             name: "",
-            status: ""
+            status: "",
+            hasCourses: false,
         }
 
 
@@ -20,10 +21,10 @@ class CreateCourse extends Component {
             e.preventDefault();
             const date = new Date();
             const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-            const data = { "title": e.target.title.value, "program": e.target.program.value, "date": `${day}/${month}/${year}`, "createdBy": "Ivan"};
-            console.log(data)
-;            fetch('https://system-school-7931c-default-rtdb.firebaseio.com/courses.json', {
-                method: 'POST', // or 'PUT'
+            const data = { "title": e.target.title.value, "description": e.target.description.value, "date": `${day}/${month}/${year}`, "postedBy": "Ivan" };
+
+            fetch('https://system-school-7931c-default-rtdb.firebaseio.com/news.json', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -31,7 +32,7 @@ class CreateCourse extends Component {
             })
                 .then(response => response.json())
                 .then(item => {
-                    this.setState({courses: [...this.state.courses,{...data,"id":item.name} ]});
+                    this.setState({ news: [...this.state.news, { ...data, "id": item.name }] });
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -45,70 +46,75 @@ class CreateCourse extends Component {
 
 
     componentDidMount() {
-        
         fetch("https://system-school-7931c-default-rtdb.firebaseio.com/courses.json")
             .then(res => res.json())
-            .then(items => { 
-                console.log(items)
+            .then(items => {
                 const array = [];
-
-                Object.keys(items).forEach((key) => {
-                    array.push({ "id": [key][0], ...items[key] });
-                });
-                this.setState({courses: array })
+                if (items) {
+                    Object.keys(items).forEach((key) => {
+                        array.push({ "id": [key][0], ...items[key] });
+                    });
+                    this.setState({ courses: array, hasCourses: true })
+                }
             })
+
     }
 
     setStateOfParent = (id) => {
-        console.log(this.state.courses)
-        this.setState({ courses: this.state.courses.filter(item => item.id != id) });
+        console.log(this.state.news)
+        this.setState({ news: this.state.news.filter(item => item.id != id) });
 
     }
 
-
     render() {
+
+
         return (
             <>
                 <main>
 
-                    <div>Create Course</div>
+                    <div>Subscribe for course</div>
 
                     <form onSubmit={this.onSubmitHandler} htmlFor="form">
 
-                        <label htmlFor="title"><b>Title: </b></label>
-                        <input type="text" placeholder="Enter Title" name="title" required />
+                        <select name="type">
+                            {
+                                this.state.courses?.map((item) =>
+                                    <OptionCourses
+                                        key={item.id}
+                                        name={item.id}
+                                        title={item.title}
+                                    ></OptionCourses>
 
-                        <label htmlFor="program"><b>Program: </b></label>
-                        <textarea name="program" placeholder="Enter text here..." required></textarea>
+                                )
+                            }
+                        </select>
 
-                        <button type="submit" name="button">Post</button>
+                        <button type="submit" name="button">Subscribe</button>
 
 
                     </form>
 
-                    <div>All created course</div>
+                    <div>All posted news</div>
 
                     <table>
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Creation Date</th>
-                                <th>Program</th>
-                                <th>Subscribers</th>
+                                <th>Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                this.state.courses?.map((item) =>
-                                    <TableCourseTheacher
+                                this.state.news?.map((item) =>
+                                    <TableCourseStudent
                                         key={item.id}
                                         name={item.id}
                                         title={item.title}
                                         date={item.date}
-                                        program = {item.program}
                                         setStateOfParent={this.setStateOfParent}
-                                    ></TableCourseTheacher>
+                                    ></TableCourseStudent>
 
                                 )}
                         </tbody>
@@ -119,22 +125,22 @@ class CreateCourse extends Component {
                 <style jsx>
                     {`
 
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                        color:black;
+                    }
 
-                        table {
-                            border-collapse: collapse;
-                            width: 100%;
-                            color:black;
-                        }
+                    td, th {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 8px;
+                    }
 
-                        td, th {
-                            border: 1px solid #dddddd;
-                            text-align: left;
-                            padding: 8px;
-                        }
+                    tr:nth-child(even) {
+                        background-color: #dddddd;
+                    }
 
-                        tr:nth-child(even) {
-                            background-color: #dddddd;
-                        }
                
                main {
                     text-align: center;
@@ -210,4 +216,4 @@ class CreateCourse extends Component {
     }
 }
 
-export default CreateCourse;
+export default Courses;

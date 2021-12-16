@@ -8,10 +8,11 @@ import Header from './components/Header/Header'
 import Main from './components/Main/Main';
 import Footer from './components/Footer/Footer';
 import Login from "./components/Login/Login";
-import Register from "./Register/Register";
+import Register from "./components/Register/Register";
 import News from "./components/News/News";
 import DetailsNews from "./components/DetailsNews/DetailsNews";
 import CreateCourse from "./components/CreateCourse/CreateCourse";
+import Courses from "./components/Courses/Courses";
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/news" exact element={<News/>} />
                     <Route path="/news/details/:newsId" element={<DetailsNews/>} />
                     <Route path="/courses/create" element={<CreateCourse/>} />
+                    <Route path="/courses" exact element={<Courses/>} />
                  </Routes>
 
                 <Footer></Footer>

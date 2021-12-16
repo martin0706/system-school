@@ -15,11 +15,24 @@ class Main extends Component {
     componentDidMount() {
         fetch("https://system-school-7931c-default-rtdb.firebaseio.com/news.json")
             .then(res => res.json())
-            .then(news => {
-                this.setState(() => ({ news }))
+            .then(items => {
+                const array = [];
+
+                if (items) {
+
+
+
+                    Object.keys(items).forEach((key) => {
+                        array.push({ "id": [key][0], ...items[key] });
+                    });
+                    this.setState({ news: array })
+
+                }
             })
+
     }
 
+    
     render() {
         return (
 
@@ -30,17 +43,17 @@ class Main extends Component {
 
                     <div>School system</div>
                     <b><div>News</div></b>
-                        
+
 
                     {
-                        Object.keys(this.state.news).map((key) =>
+                        this.state.news?.map((item) =>
                             <Article
-                                key= {key}
-                                newsId= {key}
-                                title={this.state.news[key].title}
-                                description={this.state.news[key].description}
-                                postedBy={this.state.news[key].postedBy}
-                                date={this.state.news[key].date}
+                                key={item.key}
+                                newsId={item.key}
+                                title={item.title}
+                                description={item.description}
+                                postedBy={item.postedBy}
+                                date={item.date}
                             ></Article>
 
                         )}
