@@ -10,6 +10,7 @@ import Footer from './components/Footer/Footer';
 import Login from "./components/Login/Login";
 import Register from "./Register/Register";
 import News from "./components/News/News";
+import DetailsNews from "./components/DetailsNews/DetailsNews";
 
 function App() {
     return (
@@ -24,8 +25,8 @@ function App() {
                     <Route path="/" element={<Main/>} />
                     <Route path="/login" element={<Login/>} />
                     <Route path="/register" element={<Register/>} />
-                    <Route path="/news" element={<News/>} />
-                    <Route path="/news/delete/:name" element={<News/>} />
+                    <Route path="/news" exact element={<News/>} />
+                    <Route path="/news/details/:newsId" element={<DetailsNews/>} />
                  </Routes>
 
                 <Footer></Footer>

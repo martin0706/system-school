@@ -1,8 +1,12 @@
+import { NavLink } from "react-router-dom";
+
 const Article = (props) => {
+
+   
     return (
         <>
             <article className="article">
-                <b><a href="">{props.title}</a></b>
+                <b><NavLink to ={`/news/details/${props.newsId}`}>{props.title}</NavLink></b>
                 <label className="date">Publication date:</label><span className="date">{props.date}</span>
                 <p>{props.description}</p>
                 <label className="label-post">Posted by:</label><span className="label-post">{props.postedBy}</span>

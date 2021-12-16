@@ -36,6 +36,7 @@ class Main extends Component {
                         Object.keys(this.state.news).map((key) =>
                             <Article
                                 key= {key}
+                                newsId= {key}
                                 title={this.state.news[key].title}
                                 description={this.state.news[key].description}
                                 postedBy={this.state.news[key].postedBy}
