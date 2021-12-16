@@ -1,25 +1,53 @@
-import logo from './logo.svg';
+import {
+    Routes,
+    Route
+} from "react-router-dom";
+
 import './App.css';
+import Header from './components/Header/Header'
+import Main from './components/Main/Main';
+import Footer from './components/Footer/Footer';
+import Login from "./components/Login/Login";
+import Register from "./Register/Register";
+import News from "./components/News/News";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <>
+
+            <div className="container">
+
+                <Header></Header>
+
+
+                <Routes>
+                    <Route path="/" element={<Main/>} />
+                    <Route path="/login" element={<Login/>} />
+                    <Route path="/register" element={<Register/>} />
+                    <Route path="/news" element={<News/>} />
+                    <Route path="/news/delete/:name" element={<News/>} />
+                 </Routes>
+
+                <Footer></Footer>
+
+            </div>
+
+            <style jsx>
+                {`
+
+              .container{
+                    padding-right: 15px;
+                    padding-left: 15px;
+                    margin-right: auto;
+                    margin-left: auto;
+                    font-family: cursive;
+                 
+               }
+               
+          `}
+            </style>
+        </>
+    );
 }
 
 export default App;
