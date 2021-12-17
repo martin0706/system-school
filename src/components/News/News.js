@@ -61,7 +61,6 @@ class News extends Component {
     }
 
     setStateOfParent = (id) => {
-        console.log(this.state.news)
         this.setState({ news: this.state.news.filter(item => item.id != id) });
 
     }

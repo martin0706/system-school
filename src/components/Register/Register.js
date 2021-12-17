@@ -1,9 +1,35 @@
+import firebase from "../../utils/firebase";
+import 'firebase/auth';
+import { useNavigate } from "react-router-dom";
+
 const Register = () => {
+    const navigate = useNavigate()
+
+    const onRegisterSubmitHandler = (e)=>{
+        e.preventDefault();
+
+        const username = e.target.username.value;
+        const password = e.target.password.value;
+        const confirmPsw = e.target.confirmPsw.value;
+
+        if(password == confirmPsw){
+            firebase.auth().createUserWithEmailAndPassword(username,password)
+            .then((user) =>{
+                  console.log(user.uid);
+                  e.target.reset();
+                  navigate('/');
+            })
+
+        }else{
+            console.log("Invalid credentional");
+        }
+    }
+
     return (
         <>
             <main>
 
-                <form>
+                <form onSubmit={onRegisterSubmitHandler}>
 
 
                     <label for="type" id="type"><b>Choose profil type-Theacher or Student: </b></label>
@@ -12,11 +38,14 @@ const Register = () => {
                         <option value="Student">Student</option>
                     </select>
 
-                    <label for="uname"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="uname" required />
+                    <label for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="username" required />
 
-                    <label for="psw"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="psw" required />
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" required />
+
+                    <label for="confirmPsw"><b>Confirm password</b></label>
+                    <input type="password" placeholder="Confirm Password" name="confirmPsw" required />
 
 
                     <button type="submit">Register</button>

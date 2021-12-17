@@ -48,8 +48,8 @@ class Main extends Component {
                     {
                         this.state.news?.map((item) =>
                             <Article
-                                key={item.key}
-                                newsId={item.key}
+                                key={item.id}
+                                newsId={item.id}
                                 title={item.title}
                                 description={item.description}
                                 postedBy={item.postedBy}

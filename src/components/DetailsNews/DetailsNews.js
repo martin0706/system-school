@@ -11,7 +11,7 @@ const DetailsNews = () => {
        fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/news/${itemId}.json`)
             .then(res=>res.json())
             .then(data =>setItem(data))
-   })
+   },[])
 
     return (
         <>

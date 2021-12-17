@@ -1,6 +1,6 @@
 import {
     Routes,
-    Route
+    Route,
 } from "react-router-dom";
 
 import './App.css';
@@ -13,25 +13,42 @@ import News from "./components/News/News";
 import DetailsNews from "./components/DetailsNews/DetailsNews";
 import CreateCourse from "./components/CreateCourse/CreateCourse";
 import Courses from "./components/Courses/Courses";
+import { useEffect } from "react/cjs/react.development";
+import firebase from "./utils/firebase";
+import { useState } from "react";
 
-function App() {
+function App(props) {
+
+    const [user,setUser] = useState(null);
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((authUser) => {
+            if (authUser) {
+                setUser(authUser);
+            } else {
+                setUser(null);
+            }
+        })
+
+    },[]);
+
     return (
         <>
 
             <div className="container">
 
-                <Header></Header>
-
+                <Header user={user} isAuth = {Boolean(user)}></Header>
 
                 <Routes>
-                    <Route path="/" element={<Main/>} />
-                    <Route path="/login" element={<Login/>} />
-                    <Route path="/register" element={<Register/>} />
-                    <Route path="/news" exact element={<News/>} />
-                    <Route path="/news/details/:newsId" element={<DetailsNews/>} />
-                    <Route path="/courses/create" element={<CreateCourse/>} />
-                    <Route path="/courses" exact element={<Courses/>} />
-                 </Routes>
+                    <Route path="/" exact element={<Main />} />
+                    <Route path="/login" element={ <Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/news" exact element={<News />} />
+                    <Route path="/news/details/:newsId" element={<DetailsNews />} />
+                    <Route path="/courses/create" element={<CreateCourse />} />
+                    <Route path="/courses" exact element={<Courses />} />
+                    <Route path="/logout" />
+                </Routes>
 
                 <Footer></Footer>
 

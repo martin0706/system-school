@@ -1,28 +1,49 @@
 import { NavLink } from "react-router-dom";
-const Header = () => {
+import { useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
+
+
+
+const Header = ({user,isAuth}) => {
+    const navigate = useNavigate()
+    const handleLogout = (e) => {
+        e.preventDefault();
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            navigate('/');
+        }).catch((error) => {
+            // An error happened.
+        });
+
+
+    }
+
+    console.log(isAuth)
+
     return (
         <>
-        <header>
-            <nav>
+            <header>
+                <nav>
 
 
-                <center className="wellcom"><b>Please login in</b></center>
-                <span className="auth">
-                    <img src="https://banner2.cleanpng.com/20180613/hgy/kisspng-computer-icons-college-square-academic-cap-school-5b213a5f3a9062.5537646415289042872399.jpg" />
-                    <NavLink to ="/news"  >News</NavLink>
-                    <NavLink to ="/courses/create">Create course</NavLink>
-                    <NavLink to ="/grades/add" >Add Grade</NavLink>
+                    {isAuth? (<center className="wellcom"><b>Wellcom {user.email}</b></center>): (<center className="wellcom"><b>Please login in</b></center>)}
+                    <span className="auth">
+                        <img src="https://banner2.cleanpng.com/20180613/hgy/kisspng-computer-icons-college-square-academic-cap-school-5b213a5f3a9062.5537646415289042872399.jpg" />
+                        <NavLink to="/" >Home</NavLink>
+                        <NavLink to="/news"  >News</NavLink>
+                        <NavLink to="/courses/create">Create course</NavLink>
+                        <NavLink to="/grades/add" >Add Grade</NavLink>
 
-                    <NavLink to ="/courses" >Courses</NavLink>
-                    <NavLink to ="/grades"  >Grades</NavLink>
-                   
-                    <NavLink to ="/"  >Home</NavLink>
-                    <NavLink to ="/login" >Login</NavLink>
-                    <NavLink to ="/register" >Register</NavLink>
-                </span>
-            </nav>
-        </header>
-        <style jsx>
+                        <NavLink to="/courses" >Courses</NavLink>
+                        <NavLink to="/grades"  >Grades</NavLink>
+
+                       {isAuth? null: <NavLink to="/login" >Login</NavLink>}
+                       {isAuth? null :<NavLink to="/register" >Register</NavLink>}
+                       {isAuth?<NavLink to="/logout" onClick={handleLogout}>Logout</NavLink> : null}
+                    </span>
+                </nav>
+            </header>
+            <style jsx>
                 {`
 
                     header {

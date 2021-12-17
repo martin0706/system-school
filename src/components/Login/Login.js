@@ -1,17 +1,38 @@
+import firebase from "../../utils/firebase";
+import 'firebase/auth';
+
 const Login = () => {
+   
+    const onLoginSubmitHandler =(e)=>{
+        e.preventDefault();
+
+
+        const username = e.target.username.value;
+        const password = e.target.password.value;
+        console.log(username,password);
+
+        firebase.auth().signInWithEmailAndPassword(username,password)
+        .then((userCredential) =>{
+            //  console.log(userCredential);
+              e.target.reset();
+        })
+
+        
+    };
+
     return (
         <>
             <main>
 
-                <form>
+                <form onSubmit={onLoginSubmitHandler}>
 
-                    <label for="uname"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="uname" required />
+                    <label htmlFor="username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="username" required />
 
-                    <label for="psw"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="psw" required />
+                    <label htmlFor="password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" required />
 
-                    <button type="submit">Login</button>
+                    <button type="submit" value="Login">Login</button>
                   
                     
                 </form>
