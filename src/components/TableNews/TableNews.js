@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 class TableNews extends Component {
 
-    constructor(props) {
+    constructor({props,user}) {
         super(props)
        
         this.handleClick.bind(this)

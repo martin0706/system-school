@@ -3,7 +3,7 @@ import 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const onRegisterSubmitHandler = (e)=>{
         e.preventDefault();
@@ -11,11 +11,29 @@ const Register = () => {
         const username = e.target.username.value;
         const password = e.target.password.value;
         const confirmPsw = e.target.confirmPsw.value;
+        const typeUser = e.target.type.value;
 
         if(password == confirmPsw){
-            firebase.auth().createUserWithEmailAndPassword(username,password)
-            .then((user) =>{
-                  console.log(user.uid);
+            firebase.auth().createUserWithEmailAndPassword(username,password,typeUser)
+            .then((res) =>{
+                //console.log(res)
+                  
+                fetch('https://system-school-7931c-default-rtdb.firebaseio.com/users.json', {
+                    method: 'POST', // or 'PUT'
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({"id": res.user.uid, typeUser, "email": res.user.email}),
+                })
+                    .then(response => response.json())
+                    .then(item => {
+                        console.log(item)
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+
+                  console.log(res.user.uid)
                   e.target.reset();
                   navigate('/');
             })

@@ -5,13 +5,15 @@ import TableCourseTheacher from '../TableCourseTheacher/TableCourseTheacher';
 class CreateCourse extends Component {
 
 
-    constructor(props) {
+    constructor({props, isAuth,isTheacher}) {
         super(props)
         this.setStateOfParent.bind(this);
         this.state = {
             courses: [],
             name: "",
-            status: ""
+            status: "",
+            isAuth,
+            isTheacher
         }
 
 
@@ -81,7 +83,7 @@ class CreateCourse extends Component {
                         <label htmlFor="program"><b>Program: </b></label>
                         <textarea name="program" placeholder="Enter text here..." required></textarea>
 
-                        <button type="submit" name="button">Post</button>
+                        <button type="submit" name="button">Create</button>
 
 
                     </form>

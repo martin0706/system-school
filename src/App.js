@@ -19,7 +19,8 @@ import { useState } from "react";
 
 function App(props) {
 
-    const [user,setUser] = useState(null);
+    const [user, setUser] = useState(null);
+
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((authUser) => {
@@ -29,23 +30,33 @@ function App(props) {
                 setUser(null);
             }
         })
+        
 
-    },[]);
+
+
+
+    }, []);
+
+    const authInfo={
+        uid : user?.uid
+    }
+
+  //console.log(authInfo);
 
     return (
         <>
 
             <div className="container">
 
-                <Header user={user} isAuth = {Boolean(user)}></Header>
+                <Header user={user}  authInfo = {authInfo} isAuth={Boolean(user)}></Header>
 
                 <Routes>
                     <Route path="/" exact element={<Main />} />
-                    <Route path="/login" element={ <Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/news" exact element={<News />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" user={user} element={<Register />} />
+                    <Route path="/news" exact element={<News user={user}  isAuth={Boolean(user)} />} />
                     <Route path="/news/details/:newsId" element={<DetailsNews />} />
-                    <Route path="/courses/create" element={<CreateCourse />} />
+                    <Route path="/courses/create" element={<CreateCourse isAuth={Boolean(user)} />}  />
                     <Route path="/courses" exact element={<Courses />} />
                     <Route path="/logout" />
                 </Routes>

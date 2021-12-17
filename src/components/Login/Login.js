@@ -1,7 +1,9 @@
 import firebase from "../../utils/firebase";
 import 'firebase/auth';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
    
     const onLoginSubmitHandler =(e)=>{
         e.preventDefault();
@@ -9,12 +11,11 @@ const Login = () => {
 
         const username = e.target.username.value;
         const password = e.target.password.value;
-        console.log(username,password);
 
         firebase.auth().signInWithEmailAndPassword(username,password)
         .then((userCredential) =>{
-            //  console.log(userCredential);
               e.target.reset();
+              navigate('/');
         })
 
         

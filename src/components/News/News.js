@@ -1,11 +1,12 @@
 import { Component } from 'react';
 import TableNews from '../TableNews/TableNews';
+import { getAuth } from "firebase/auth";
 
 
 class News extends Component {
 
 
-    constructor(props) {
+    constructor({ props, user }) {
         super(props)
         this.setStateOfParent.bind(this);
         this.state = {
@@ -13,6 +14,7 @@ class News extends Component {
             name: "",
             status: "",
             hasNews: false,
+            email: user.email
         }
 
 
@@ -21,7 +23,7 @@ class News extends Component {
             e.preventDefault();
             const date = new Date();
             const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-            const data = { "title": e.target.title.value, "description": e.target.description.value, "date": `${day}/${month}/${year}`, "postedBy": "Ivan" };
+            const data = { "title": e.target.title.value, "description": e.target.description.value, "date": `${day}/${month}/${year}`, "postedBy": user?.email };
 
             fetch('https://system-school-7931c-default-rtdb.firebaseio.com/news.json', {
                 method: 'POST', // or 'PUT'
@@ -51,8 +53,11 @@ class News extends Component {
             .then(items => {
                 const array = [];
                 if (items) {
+                    console.log(items)
                     Object.keys(items).forEach((key) => {
-                        array.push({ "id": [key][0], ...items[key] });
+                        if (items[key].postedBy == this.state.email) {
+                            array.push({ "id": [key][0], ...items[key] });
+                        }
                     });
                     this.setState({ news: array, hasNews: true })
                 }
