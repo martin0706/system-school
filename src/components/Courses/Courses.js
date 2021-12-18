@@ -5,42 +5,15 @@ import OptionCourses from "../OptionCourses/OptionCourses";
 class Courses extends Component {
 
 
-    constructor(props) {
+    constructor({props,user}) {
         super(props)
         this.setStateOfParent.bind(this);
         this.state = {
             courses: [],
             name: "",
-            status: "",
-            hasCourses: false,
+            userUid: user?.uid,
+            email: user?.email,
         }
-
-
-
-        this.onSubmitHandler = (e) => {
-            e.preventDefault();
-            const date = new Date();
-            const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-            const data = { "title": e.target.title.value, "description": e.target.description.value, "date": `${day}/${month}/${year}`, "postedBy": "Ivan" };
-
-            fetch('https://system-school-7931c-default-rtdb.firebaseio.com/news.json', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-                .then(response => response.json())
-                .then(item => {
-                    this.setState({ news: [...this.state.news, { ...data, "id": item.name }] });
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-            e.target.reset();
-        }
-
-
 
     }
 
@@ -75,27 +48,35 @@ class Courses extends Component {
 
                     <div>Subscribe for course</div>
 
-                    <form onSubmit={this.onSubmitHandler} htmlFor="form">
-
-                        <select name="type">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Start Date</th>
+                                <th>Program</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {
                                 this.state.courses?.map((item) =>
                                     <OptionCourses
                                         key={item.id}
                                         name={item.id}
                                         title={item.title}
+                                        program={item.program}
+                                        startDate={item.startDate}
+                                        setStateOfParent={this.setStateOfParent}
+                                        userUid = {this.state.userUid}
+                                        email = {this.state.email}
                                     ></OptionCourses>
 
-                                )
-                            }
-                        </select>
+                                )}
+                        </tbody>
+                    </table>
+            
 
-                        <button type="submit" name="button">Subscribe</button>
-
-
-                    </form>
-
-                    <div>All posted news</div>
+                    <div>All courses suscribe from user</div>
 
                     <table>
                         <thead>
@@ -122,7 +103,7 @@ class Courses extends Component {
 
                 </main>
 
-                <style jsx>
+                <style>
                     {`
 
                     table {
@@ -191,9 +172,10 @@ class Courses extends Component {
               }
 
              main div{
-
-                padding: 10px;
+                width: 100%;
+                padding: 50px 30px;
                 color: Black;
+                border: 1px solid black;
               }
 
               textarea{

@@ -31,10 +31,6 @@ function App(props) {
             }
         })
         
-
-
-
-
     }, []);
 
     const authInfo={
@@ -57,7 +53,7 @@ function App(props) {
                     <Route path="/news" exact element={<News user={user}  isAuth={Boolean(user)} />} />
                     <Route path="/news/details/:newsId" element={<DetailsNews />} />
                     <Route path="/courses/create" element={<CreateCourse user={user} isAuth={Boolean(user)} />}  />
-                    <Route path="/courses" exact element={<Courses />} />
+                    <Route path="/courses" exact element={<Courses user={user} />} />
                     <Route path="/logout" />
                 </Routes>
 

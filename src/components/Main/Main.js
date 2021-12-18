@@ -60,7 +60,7 @@ class Main extends Component {
 
                 </main>
 
-                <style jsx>
+                <style>
                     {`
                    
                    main {

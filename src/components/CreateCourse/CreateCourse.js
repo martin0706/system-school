@@ -5,7 +5,7 @@ import TableCourseTheacher from '../TableCourseTheacher/TableCourseTheacher';
 class CreateCourse extends Component {
 
 
-    constructor({ props, isAuth, isTheacher,user }) {
+    constructor({ props, isAuth, isTheacher, user }) {
         super(props)
         this.setStateOfParent.bind(this);
         this.state = {
@@ -23,7 +23,8 @@ class CreateCourse extends Component {
             e.preventDefault();
             const date = new Date();
             const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-            const data = { "title": e.target.title.value, "program": e.target.program.value, "date": `${day}/${month}/${year}`, "createdBy": user?.email };
+        console.log( e.target.start.value);
+            const data = { "title": e.target.title.value, "program": e.target.program.value, "date": `${day}/${month}/${year}`, "createdBy": user?.email ,"startDate":  e.target.start.value};
             console.log(data)
                 ; fetch('https://system-school-7931c-default-rtdb.firebaseio.com/courses.json', {
                     method: 'POST', // or 'PUT'
@@ -85,6 +86,12 @@ class CreateCourse extends Component {
                         <label htmlFor="title"><b>Title: </b></label>
                         <input type="text" placeholder="Enter Title" name="title" required />
 
+
+                        <label htmlFor="start">Start date:</label>
+
+                        <input type="date" id="start" name="start"
+                            min="2021-01-01" max="2025-12-31" />
+
                         <label htmlFor="program"><b>Program: </b></label>
                         <textarea name="program" placeholder="Enter text here..." required></textarea>
 
@@ -100,6 +107,7 @@ class CreateCourse extends Component {
                             <tr>
                                 <th>Title</th>
                                 <th>Creation Date</th>
+                                <th>Start Date</th>
                                 <th>Program</th>
                                 <th>Subscribers</th>
                                 <th>Actions</th>
@@ -112,6 +120,7 @@ class CreateCourse extends Component {
                                         key={item.id}
                                         name={item.id}
                                         title={item.title}
+                                        startDate = {item.startDate}
                                         date={item.date}
                                         program={item.program}
                                         setStateOfParent={this.setStateOfParent}
@@ -123,7 +132,7 @@ class CreateCourse extends Component {
 
                 </main>
 
-                <style jsx>
+                <style>
                     {`
 
 

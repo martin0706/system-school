@@ -31,7 +31,7 @@ class TableNews extends Component {
                     </td>
                 </tr>
 
-                <style jsx>
+                <style>
                     {`
 
                     td {

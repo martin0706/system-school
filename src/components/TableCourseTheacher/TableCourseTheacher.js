@@ -27,12 +27,13 @@ class TableCourseTheacher extends Component {
                 <tr>
                     <td>{this.props.title}</td>
                     <td>{this.props.date}</td>
+                    <td>{this.props.startDate}</td>
                     <td>{this.props.program}</td>
                     <td><button className="listBtn">List</button> </td>
                     <td><button className="deleteBtn" onClick={this.handleClick} >Delete</button> </td>
                 </tr>
 
-                <style jsx>
+                <style>
                     {`
 
                     table {

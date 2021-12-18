@@ -11,7 +11,7 @@ const Article = (props) => {
                 <p>{props.description}</p>
                 <label className="label-post">Posted by:</label><span className="label-post">{props.postedBy}</span>
             </article>
-            <style jsx>
+            <style>
                 {`
 
                     .date{

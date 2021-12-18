@@ -29,7 +29,7 @@ const DetailsNews = () => {
                 
           </main>
 
-            <style jsx>
+            <style>
                 {`
                
                main {

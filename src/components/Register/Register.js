@@ -69,7 +69,7 @@ const Register = () => {
 
             </main>
 
-            <style jsx>
+            <style>
                 {`
                
                main {

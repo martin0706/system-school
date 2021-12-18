@@ -4,7 +4,7 @@ const Footer = () => {
             <footer>
                 <div>All rights reserved &copy;</div>
             </footer>
-            <style jsx>
+            <style>
                 {`
 
                    footer{

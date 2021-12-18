@@ -119,7 +119,7 @@ class News extends Component {
 
                 </main>
 
-                <style jsx>
+                <style>
                     {`
 
                     table {

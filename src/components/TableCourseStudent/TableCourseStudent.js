@@ -33,7 +33,7 @@ class TableCourseStudent extends Component {
                     <td><button className="deleteBtn" onClick={this.handleClick} >Delete</button> </td>
                 </tr>
 
-                <style jsx>
+                <style>
                     {`
 
                     table {

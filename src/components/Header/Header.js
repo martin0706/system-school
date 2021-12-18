@@ -69,7 +69,7 @@ const Header = ({ user, isAuth, authInfo }) => {
                     </span>
                 </nav>
             </header>
-            <style jsx>
+            <style>
                 {`
 
                     header {

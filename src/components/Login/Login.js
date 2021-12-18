@@ -39,7 +39,7 @@ const Login = () => {
                 </form>
           </main>
 
-            <style jsx>
+            <style>
                 {`
                
                main {

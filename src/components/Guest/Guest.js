@@ -13,7 +13,7 @@ const GuestPage = () => {
                 <Footer></Footer>
                 
             </div>
-            <style jsx>
+            <style>
                 {`
 
                   .container{
