@@ -4,9 +4,10 @@ import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 
-const Header = ({ user, isAuth,authInfo }) => {
+const Header = ({ user, isAuth, authInfo }) => {
     const [typeUser, setTypeUser] = useState(null);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     const handleLogout = (e) => {
         e.preventDefault();
         const auth = getAuth();
@@ -19,33 +20,31 @@ const Header = ({ user, isAuth,authInfo }) => {
 
     }
 
+    
+   /* useEffect(async () => {
+        const response = await fetch("https://system-school-7931c-default-rtdb.firebaseio.com/users.json")
+        const items = await response.json();
+        
+          console.log(items);
+          Object.keys(items).forEach((key) => {
+            console.log(items[key].id == authInfo.uid);
 
-    useEffect(() => {
-      
-        fetch("https://system-school-7931c-default-rtdb.firebaseio.com/users.json")
-            .then(res => res.json())
-            .then(items => {
-                const array = [];
-                if (items) {
-                   console.log(items)
-                   console.log(authInfo.uid)
-                   
-                    Object.keys(items).forEach((key) => {
-                        if (items[key].id == authInfo.uid) {
-                         
-                            setTypeUser(items[key].typeUser);
-                           console.log(typeUser);
-                        }
+            if (items[key].id == authInfo.uid) {
 
-                    });
+                setTypeUser(items[key].typeUser);
+               
+            }
 
-                }
-            })
-           
-           
-    }, []);
+        });
+
+        console.log(typeUser);
+      }, []);*/
+
+    const theacherUIDs = ["56etcyNrh6QytJHR2Z9NjeO1Epm2","9s0spYnCSRZJTLglzhPeCddI4rr1","vhdR8yIFSXb9KIehNk5JUQzdpN73" ]
     
     
+   
+
 
     return (
         <>
@@ -57,12 +56,12 @@ const Header = ({ user, isAuth,authInfo }) => {
                     <span className="auth">
                         <img src="https://banner2.cleanpng.com/20180613/hgy/kisspng-computer-icons-college-square-academic-cap-school-5b213a5f3a9062.5537646415289042872399.jpg" />
                         <NavLink to="/" >Home</NavLink>
-                        {isAuth ? <NavLink to="/news"  >News</NavLink> : null}
-                        {isAuth && typeUser == "Theacher"? <NavLink to="/courses/create">Create course</NavLink> : null}
-                        {isAuth ? <NavLink to="/grades/add" >Add Grade</NavLink> : null}
+                        {isAuth && theacherUIDs.includes(authInfo.uid) ? <NavLink to="/news"  >News</NavLink> : null}
+                        {isAuth  && theacherUIDs.includes(authInfo.uid) ? <NavLink to="/courses/create">Create course</NavLink> : null}
+                        {isAuth  && theacherUIDs.includes(authInfo.uid) ? <NavLink to="/grades/add" >Add Grade</NavLink> : null}
 
-                        {isAuth ? <NavLink to="/courses" >Courses</NavLink> : null}
-                        {isAuth ? <NavLink to="/grades"  >Grades</NavLink> : null}
+                        {isAuth && !theacherUIDs.includes(authInfo.uid) ? <NavLink to="/courses" >Courses</NavLink> : null}
+                        {isAuth  && !theacherUIDs.includes(authInfo.uid) ? <NavLink to="/grades"  >Grades</NavLink> : null}
 
                         {isAuth ? null : <NavLink to="/login" >Login</NavLink>}
                         {isAuth ? null : <NavLink to="/register" >Register</NavLink>}

@@ -5,13 +5,14 @@ import TableCourseTheacher from '../TableCourseTheacher/TableCourseTheacher';
 class CreateCourse extends Component {
 
 
-    constructor({props, isAuth,isTheacher}) {
+    constructor({ props, isAuth, isTheacher,user }) {
         super(props)
         this.setStateOfParent.bind(this);
         this.state = {
             courses: [],
             name: "",
             status: "",
+            email: user?.email,
             isAuth,
             isTheacher
         }
@@ -22,22 +23,22 @@ class CreateCourse extends Component {
             e.preventDefault();
             const date = new Date();
             const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-            const data = { "title": e.target.title.value, "program": e.target.program.value, "date": `${day}/${month}/${year}`, "createdBy": "Ivan"};
+            const data = { "title": e.target.title.value, "program": e.target.program.value, "date": `${day}/${month}/${year}`, "createdBy": user?.email };
             console.log(data)
-;            fetch('https://system-school-7931c-default-rtdb.firebaseio.com/courses.json', {
-                method: 'POST', // or 'PUT'
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-                .then(response => response.json())
-                .then(item => {
-                    this.setState({courses: [...this.state.courses,{...data,"id":item.name} ]});
+                ; fetch('https://system-school-7931c-default-rtdb.firebaseio.com/courses.json', {
+                    method: 'POST', // or 'PUT'
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+                    .then(response => response.json())
+                    .then(item => {
+                        this.setState({ courses: [...this.state.courses, { ...data, "id": item.name }] });
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
             e.target.reset();
         }
 
@@ -47,17 +48,21 @@ class CreateCourse extends Component {
 
 
     componentDidMount() {
-        
+
         fetch("https://system-school-7931c-default-rtdb.firebaseio.com/courses.json")
             .then(res => res.json())
-            .then(items => { 
+            .then(items => {
                 console.log(items)
                 const array = [];
-
-                Object.keys(items).forEach((key) => {
-                    array.push({ "id": [key][0], ...items[key] });
-                });
-                this.setState({courses: array })
+                if (items) {
+                    Object.keys(items).forEach((key) => {
+                        console.log(this.state.email)
+                        if (items[key].createdBy == this.state.email) {
+                            array.push({ "id": [key][0], ...items[key] });
+                        }
+                    });
+                    this.setState({ courses: array })
+                }
             })
     }
 
@@ -108,7 +113,7 @@ class CreateCourse extends Component {
                                         name={item.id}
                                         title={item.title}
                                         date={item.date}
-                                        program = {item.program}
+                                        program={item.program}
                                         setStateOfParent={this.setStateOfParent}
                                     ></TableCourseTheacher>
 

@@ -41,7 +41,7 @@ function App(props) {
         uid : user?.uid
     }
 
-  //console.log(authInfo);
+  console.log(authInfo);
 
     return (
         <>
@@ -56,7 +56,7 @@ function App(props) {
                     <Route path="/register" user={user} element={<Register />} />
                     <Route path="/news" exact element={<News user={user}  isAuth={Boolean(user)} />} />
                     <Route path="/news/details/:newsId" element={<DetailsNews />} />
-                    <Route path="/courses/create" element={<CreateCourse isAuth={Boolean(user)} />}  />
+                    <Route path="/courses/create" element={<CreateCourse user={user} isAuth={Boolean(user)} />}  />
                     <Route path="/courses" exact element={<Courses />} />
                     <Route path="/logout" />
                 </Routes>

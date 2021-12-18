@@ -14,7 +14,7 @@ class News extends Component {
             name: "",
             status: "",
             hasNews: false,
-            email: user.email
+            email: user?.email
         }
 
 

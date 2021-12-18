@@ -11,10 +11,9 @@ const Register = () => {
         const username = e.target.username.value;
         const password = e.target.password.value;
         const confirmPsw = e.target.confirmPsw.value;
-        const typeUser = e.target.type.value;
 
         if(password == confirmPsw){
-            firebase.auth().createUserWithEmailAndPassword(username,password,typeUser)
+            firebase.auth().createUserWithEmailAndPassword(username,password)
             .then((res) =>{
                 //console.log(res)
                   
@@ -23,7 +22,7 @@ const Register = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({"id": res.user.uid, typeUser, "email": res.user.email}),
+                    body: JSON.stringify({"id": res.user.uid, "email": res.user.email}),
                 })
                     .then(response => response.json())
                     .then(item => {
@@ -50,14 +49,8 @@ const Register = () => {
                 <form onSubmit={onRegisterSubmitHandler}>
 
 
-                    <label for="type" id="type"><b>Choose profil type-Theacher or Student: </b></label>
-                    <select name="type">
-                        <option value="Theacher">Theacher</option>
-                        <option value="Student">Student</option>
-                    </select>
-
-                    <label for="username"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="username" required />
+                    <label for="username"><b>Email</b></label>
+                    <input type="text" placeholder="Enter Email" name="username" required />
 
                     <label for="password"><b>Password</b></label>
                     <input type="password" placeholder="Enter Password" name="password" required />
