@@ -56,6 +56,7 @@ function App(props) {
                     <Route path="/news/details/:newsId" element={<DetailsNews />} />
                     <Route path="/courses/create" element={<CreateCourse user={user} isAuth={Boolean(user)} />}  />
                     <Route path="/courses" exact element={<Courses user={authInfo} />} />
+                    <Route path="/grades" exact element={<Grades user={authInfo} />} />
                     <Route path="/logout" />
                 </Routes>
 

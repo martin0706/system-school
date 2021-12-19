@@ -1,19 +1,16 @@
 import { Component } from 'react';
-import TableCourseStudent from '../TableCourseStudent/TableCourseStudent';
-import OptionCourses from "../OptionCourses/OptionCourses";
+import TableGrades from "../TableGrades/TableGrades";
 
 class Courses extends Component {
 
 
-    constructor({ props, user ,authInfo}) {
+    constructor({ props, user}) {
         super(props)
-        this.setStateOfParentFormUnscribe.bind(this);
         this.state = {
             name: "",
             userUid: user?.uid,
             email: user?.email,
-            ownCourses: [],
-            authInfo
+            courses: [],
         }
 
     }
@@ -25,36 +22,25 @@ class Courses extends Component {
             .then(res => res.json())
             .then(items => {
                 const array = [];
-                const ownCourses = [];
-              //  console.log(this.state.userUid)
 
                 if (items) {
                     Object.keys(items).forEach((key) => {
                         console.log(items[key])
                         if (("subscribers" in items[key])) {
-                            //console.log(items[key])
-                    
                             for(const obj in items[key].subscribers){
-                                if(obj.uid == this.state.userUid){
-                                    ownCourses.push({ "id": [key][0], ...items[key] })
+
+                                if(items[key].subscribers[obj].uid == this.state.userUid){
+                                    array.push({ "id": [key][0], "title" :items[key].title,"grade": items[key].subscribers[obj].grade,"email":items[key].subscribers[obj].email })
                                 }
                             }
                         }
 
                     });
-
-                   // console.log(array);
-                    //console.log(ownCourses);
-                    this.setState({ ownCourses: ownCourses })
+                    console.log(array)
+                    this.setState({ courses: array })
                 }
             })
 
-    }
-
-
-    setStateOfParentFormUnscribe = (id) => {
-        //console.log(this.state.courses)
-        //this.setState({ courses: this.state.courses.filter(item => item.id != id) });
     }
 
   
@@ -66,27 +52,26 @@ class Courses extends Component {
             <>
                 <main>
 
-                    <div>All courses suscribed from user</div>
+                    <div>All grades from courses</div>
 
                     <table>
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Start Date</th>
-                                <th>Program</th>
+                                <th>Theacher name</th>
+                                <th>Course Title</th>
+                                <th>Grade</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                this.state.ownCourses?.map((item) =>
-                                    <TableCourseStudent
+                                this.state.courses?.map((item) =>
+                                    <TableGrades
                                         key={item.id}
                                         name={item.id}
                                         title={item.title}
-                                        program={item.program}
-                                        startDate={item.startDate}
-                                        setStateOfParentFormUnscribe={this.setStateOfParentFormUnscribe}
-                                    ></TableCourseStudent>
+                                        grade={item.grade}
+                                        email={item.email}
+                                    ></TableGrades>
 
                                 )}
                         </tbody>

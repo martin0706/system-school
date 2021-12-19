@@ -30,7 +30,7 @@ class OptionCourses extends Component {
                     }
 
                     data = {...data,subscribers:[{"uid":user.uid, "email": user.email}]}
-                    console.log(data);
+                    
                 }
                 
                 //console.log(data);
