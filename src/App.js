@@ -12,6 +12,7 @@ import Register from "./components/Register/Register";
 import News from "./components/News/News";
 import DetailsNews from "./components/DetailsNews/DetailsNews";
 import CreateCourse from "./components/CreateCourse/CreateCourse";
+import Grades from "./components/Grades/Grades";
 import Courses from "./components/Courses/Courses";
 import { useEffect } from "react/cjs/react.development";
 import firebase from "./utils/firebase";
@@ -34,10 +35,11 @@ function App(props) {
     }, []);
 
     const authInfo={
-        uid : user?.uid
+        uid : user?.uid,
+        email : user?.email
     }
 
-  console.log(authInfo);
+    localStorage.setItem('user', JSON.stringify(user));
 
     return (
         <>
@@ -53,7 +55,7 @@ function App(props) {
                     <Route path="/news" exact element={<News user={user}  isAuth={Boolean(user)} />} />
                     <Route path="/news/details/:newsId" element={<DetailsNews />} />
                     <Route path="/courses/create" element={<CreateCourse user={user} isAuth={Boolean(user)} />}  />
-                    <Route path="/courses" exact element={<Courses user={user} />} />
+                    <Route path="/courses" exact element={<Courses user={authInfo} />} />
                     <Route path="/logout" />
                 </Routes>
 

@@ -8,15 +8,33 @@ class TableCourseStudent extends Component {
     constructor(props) {
         super(props)
        
-        this.handleClick.bind(this)
+        this.handleClickUnscribe.bind(this)
     }
 
-    handleClick = (e) => {
+    handleClickUnscribe = (e) => {
+        let user =JSON.parse(localStorage.getItem('user'));
         e.preventDefault();
-        console.log(this.props.news);
-        fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${this.props.name}.json`, { method: 'DELETE' })
-            .then(res => res.json()) 
-            this.props.setStateOfParent(this.props.name);
+        fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${this.props.name}.json`)
+            .then(res => res.json())
+            .then(data => {
+                 
+                
+                 let filteredSubscriber =  data.subscribers.filter(item=>item.uid != user.uid);
+                 
+                 let newData = {"createdBy": data.createdBy, "date": data.date, "program": data.program, "startDate": data.startDate,"subscribers":filteredSubscriber,"title":data.title};
+                
+                //console.log(data);
+                fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${this.props.name}.json`, {
+                    method: 'PUT', // or 'PUT'
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newData),
+                })
+                    .then(response => {response.json()})
+            })
+         
+            this.props.setStateOfParentFormUnscribe(this.props.name);
     }
 
     
@@ -27,10 +45,9 @@ class TableCourseStudent extends Component {
 
                 <tr>
                     <td>{this.props.title}</td>
-                    <td>{this.props.date}</td>
+                    <td>{this.props.startDate}</td>
                     <td>{this.props.program}</td>
-                    <td><button className="listBtn">List</button> </td>
-                    <td><button className="deleteBtn" onClick={this.handleClick} >Delete</button> </td>
+                    <td><button className="unscribeBtn" onClick={this.handleClickUnscribe} >Unscribe</button> </td>
                 </tr>
 
                 <style>
@@ -67,8 +84,8 @@ class TableCourseStudent extends Component {
                         background-color:green;
                       }
 
-                      .deleteBtn{
-                        background-color:red;
+                      .unscribeBtn{
+                        background-color:orange;
                       }
               `}
                 </style>

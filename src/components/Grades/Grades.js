@@ -8,9 +8,7 @@ class Courses extends Component {
     constructor({ props, user ,authInfo}) {
         super(props)
         this.setStateOfParentFormUnscribe.bind(this);
-        this.setStateOfParentFormSubscribe.bind(this);
         this.state = {
-            courses: [],
             name: "",
             userUid: user?.uid,
             email: user?.email,
@@ -22,45 +20,41 @@ class Courses extends Component {
 
 
     componentDidMount() {
-        
+
         fetch("https://system-school-7931c-default-rtdb.firebaseio.com/courses.json")
             .then(res => res.json())
             .then(items => {
                 const array = [];
                 const ownCourses = [];
-             
+              //  console.log(this.state.userUid)
+
                 if (items) {
                     Object.keys(items).forEach((key) => {
-
-                        if (!("subscribers" in items[key])) {
-                            array.push({ "id": [key][0], ...items[key] });
-                        } else {
-                            for (const obj in items[key].subscribers) {
-                                if (items[key].subscribers[obj].uid != this.state.userUid) {
-                                    array.push({ "id": [key][0], ...items[key] });
-                                }else{
+                        console.log(items[key])
+                        if (("subscribers" in items[key])) {
+                            //console.log(items[key])
+                    
+                            for(const obj in items[key].subscribers){
+                                if(obj.uid == this.state.userUid){
                                     ownCourses.push({ "id": [key][0], ...items[key] })
                                 }
                             }
                         }
+
                     });
-                    
+
+                   // console.log(array);
+                    //console.log(ownCourses);
+                    this.setState({ ownCourses: ownCourses })
                 }
-                this.setState({ courses: array, ownCourses: ownCourses })
             })
 
     }
 
-    setStateOfParentFormSubscribe = (id) => {
-        let course = this.state.courses.filter((obj)=>obj.id == id);
-        this.state.ownCourses.push(course[0]);
-        this.setState({ courses: this.state.courses.filter(item => item.id != id)});
-    }
 
     setStateOfParentFormUnscribe = (id) => {
-         let course = this.state.ownCourses.filter((obj)=>obj.id == id);
-         this.state.courses.push(course[0]);
-         this.setState({ ownCourses: this.state.ownCourses.filter(item => item.id != id)});
+        //console.log(this.state.courses)
+        //this.setState({ courses: this.state.courses.filter(item => item.id != id) });
     }
 
   
@@ -71,37 +65,6 @@ class Courses extends Component {
         return (
             <>
                 <main>
-
-                    <div>Subscribe for course</div>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Start Date</th>
-                                <th>Program</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.courses?.map((item) =>
-                                    <OptionCourses
-                                        key={item.id}
-                                        name={item.id}
-                                        title={item.title}
-                                        program={item.program}
-                                        startDate={item.startDate}
-                                        setStateOfParentFormSubscribe={this.setStateOfParentFormSubscribe}
-                                        userUid={this.state.userUid}
-                                        email={this.state.email}
-                                        ownCourses = {this.state.ownCourses}
-                                    ></OptionCourses>
-
-                                )}
-                        </tbody>
-                    </table>
-
 
                     <div>All courses suscribed from user</div>
 
@@ -202,7 +165,7 @@ class Courses extends Component {
              main div{
                 width: 100%;
                 padding: 50px 30px;
-                color: red;
+                color: Black;
                 border: 1px solid black;
               }
 

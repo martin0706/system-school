@@ -7,24 +7,33 @@ class OptionCourses extends Component {
     constructor(props) {
         super(props)
 
-        this.handleClick.bind(this)
+        this.handleClickSubscribe.bind(this)
     }
 
-    handleClick = (e) => {
+    handleClickSubscribe = (e) => {
+        let user =JSON.parse(localStorage.getItem('user'));
         e.preventDefault();
-        console.log(this.props.name);
         fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${this.props.name}.json`)
             .then(res => res.json())
             .then(data => {
-                console.log(this.props.userUid)
 
-                if(data.hasOwnProperty('subscribers')){
-                    data.subscribers.push(this.props.userUid);
-                }else{
-                    data = {...data,subscribers:[this.props.userUid]}
-                }
-                 
                 console.log(data);
+                console.log(data.hasOwnProperty('subscribers'))
+                if(data.hasOwnProperty('subscribers')){
+                   
+                    data.subscribers.push({"uid": user.uid, "email": user.email});
+                }else{
+                    console.log(data)
+
+                    for(const obj in data ){
+                        console.log(obj);
+                    }
+
+                    data = {...data,subscribers:[{"uid":user.uid, "email": user.email}]}
+                    console.log(data);
+                }
+                
+                //console.log(data);
                 fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${this.props.name}.json`, {
                     method: 'PUT', // or 'PUT'
                     headers: {
@@ -32,16 +41,11 @@ class OptionCourses extends Component {
                     },
                     body: JSON.stringify(data),
                 })
-                    .then(response => response.json())
-                    //.then(item => {
-                     //   this.setState({ news: [...this.state.news, { ...data, "id": item.name }] });
-                    //})
-                    //.catch((error) => {
-                    //    console.error('Error:', error);
-                    //});
+                    .then(response => {response.json()})
             })
-
-        //  this.props.setStateOfParent(this.props.name);
+         
+            this.props.setStateOfParentFormSubscribe(this.props.name);
+        
     }
 
 
@@ -55,7 +59,7 @@ class OptionCourses extends Component {
                     <td>{this.props.startDate}</td>
                     <td>{this.props.program}</td>
 
-                    <td><button className="subscribeBtn" onClick={this.handleClick} >Subscribe</button> </td>
+                    <td><button className="subscribeBtn" onClick={this.handleClickSubscribe} >Subscribe</button> </td>
                 </tr>
 
                 <style>

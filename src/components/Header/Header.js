@@ -13,6 +13,7 @@ const Header = ({ user, isAuth, authInfo }) => {
         const auth = getAuth();
         signOut(auth).then(() => {
             navigate('/');
+            localStorage.removeItem('user');
         }).catch((error) => {
             // An error happened.
         });
@@ -52,7 +53,7 @@ const Header = ({ user, isAuth, authInfo }) => {
                 <nav>
 
 
-                    {isAuth ? (<center className="wellcom"><b>Wellcom {user.email}</b></center>) : (<center className="wellcom"><b>Please login in</b></center>)}
+                    {isAuth ? (<center className="wellcome"><b>Welcome {user.email}</b></center>) : (<center className="wellcom"><b>Please login in</b></center>)}
                     <span className="auth">
                         <img src="https://banner2.cleanpng.com/20180613/hgy/kisspng-computer-icons-college-square-academic-cap-school-5b213a5f3a9062.5537646415289042872399.jpg" />
                         <NavLink to="/" >Home</NavLink>
@@ -108,7 +109,7 @@ const Header = ({ user, isAuth, authInfo }) => {
                         text-decoration: none;
                     }
 
-                  .wellcom{
+                  .wellcome{
                     margin-right:auto;
                     font-size: 15px;
                     color: black;
