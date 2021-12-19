@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import TableCourseTheacher from '../TableCourseTheacher/TableCourseTheacher';
 
-
 class CreateCourse extends Component {
 
 
@@ -53,11 +52,9 @@ class CreateCourse extends Component {
         fetch("https://system-school-7931c-default-rtdb.firebaseio.com/courses.json")
             .then(res => res.json())
             .then(items => {
-                console.log(items)
                 const array = [];
                 if (items) {
                     Object.keys(items).forEach((key) => {
-                        console.log(this.state.email)
                         if (items[key].createdBy == this.state.email) {
                             array.push({ "id": [key][0], ...items[key] });
                         }
@@ -68,7 +65,6 @@ class CreateCourse extends Component {
     }
 
     setStateOfParent = (id) => {
-        console.log(this.state.courses)
         this.setState({ courses: this.state.courses.filter(item => item.id != id) });
 
     }

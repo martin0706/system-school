@@ -15,7 +15,6 @@ const Register = () => {
         if(password == confirmPsw){
             firebase.auth().createUserWithEmailAndPassword(username,password)
             .then((res) =>{
-                //console.log(res)
                   
                 fetch('https://system-school-7931c-default-rtdb.firebaseio.com/users.json', {
                     method: 'POST', // or 'PUT'
@@ -32,7 +31,6 @@ const Register = () => {
                         console.error('Error:', error);
                     });
 
-                  console.log(res.user.uid)
                   e.target.reset();
                   navigate('/');
             })

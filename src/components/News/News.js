@@ -53,7 +53,6 @@ class News extends Component {
             .then(items => {
                 const array = [];
                 if (items) {
-                    console.log(items)
                     Object.keys(items).forEach((key) => {
                         if (items[key].postedBy == this.state.email) {
                             array.push({ "id": [key][0], ...items[key] });

@@ -14,6 +14,8 @@ import DetailsNews from "./components/DetailsNews/DetailsNews";
 import CreateCourse from "./components/CreateCourse/CreateCourse";
 import Grades from "./components/Grades/Grades";
 import Courses from "./components/Courses/Courses";
+import Subscribers from "./components/Subscribers/Subscribers"
+import AddGrade from "./components/AddGrade/AddGrade";
 import { useEffect } from "react/cjs/react.development";
 import firebase from "./utils/firebase";
 import { useState } from "react";
@@ -31,12 +33,12 @@ function App(props) {
                 setUser(null);
             }
         })
-        
+
     }, []);
 
-    const authInfo={
-        uid : user?.uid,
-        email : user?.email
+    const authInfo = {
+        uid: user?.uid,
+        email: user?.email
     }
 
     localStorage.setItem('user', JSON.stringify(user));
@@ -46,18 +48,37 @@ function App(props) {
 
             <div className="container">
 
-                <Header user={user}  authInfo = {authInfo} isAuth={Boolean(user)}></Header>
+                <Header user={user} authInfo={authInfo} isAuth={Boolean(user)}></Header>
 
                 <Routes>
                     <Route path="/" exact element={<Main />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" user={user} element={<Register />} />
-                    <Route path="/news" exact element={<News user={user}  isAuth={Boolean(user)} />} />
+                    <Route path="/news" exact element={<News user={user} isAuth={Boolean(user)} />} />
+
+                   
                     <Route path="/news/details/:newsId" element={<DetailsNews />} />
-                    <Route path="/courses/create" element={<CreateCourse user={user} isAuth={Boolean(user)} />}  />
-                    <Route path="/courses" exact element={<Courses user={authInfo} />} />
-                    <Route path="/grades" exact element={<Grades user={authInfo} />} />
-                    <Route path="/logout" />
+                    
+                    {Boolean(user) &&
+                        <Route path="/courses/create" element={<CreateCourse user={user} isAuth={Boolean(user)} />} />
+                    }
+                    {Boolean(user) &&
+                        <Route path="/courses/subscribers/:courseId" element={<Subscribers user={authInfo} />} />
+                    }
+                    {Boolean(user) &&
+                        <Route path="/courses" exact element={<Courses user={authInfo} />} />
+                    }
+                    {Boolean(user) &&
+                        <Route path="/grades" exact element={<Grades user={authInfo} />} />
+                    }
+
+                    {Boolean(user) &&
+                        <Route path="/grades/add"  element={<AddGrade user={authInfo} />} />
+                    }
+                    {Boolean(user) &&
+                        <Route path="/logout" />
+                    }
+
                 </Routes>
 
                 <Footer></Footer>

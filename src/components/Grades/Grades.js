@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import TableGrades from "../TableGrades/TableGrades";
 
-class Courses extends Component {
+class Grades extends Component {
 
 
     constructor({ props, user}) {
@@ -25,7 +25,7 @@ class Courses extends Component {
 
                 if (items) {
                     Object.keys(items).forEach((key) => {
-                        console.log(items[key])
+                       
                         if (("subscribers" in items[key])) {
                             for(const obj in items[key].subscribers){
 
@@ -174,4 +174,4 @@ class Courses extends Component {
     }
 }
 
-export default Courses;
+export default Grades;

@@ -2,35 +2,26 @@ import { render } from '@testing-library/react';
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-class TableCourseTheacher extends Component {
+
+class GradeListAdd extends Component {
 
     constructor(props) {
         super(props)
-       
-        this.handleClick.bind(this)
     }
 
-    handleClick = (e) => {
-        e.preventDefault();
-        console.log(this.props.news);
-        fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${this.props.name}.json`, { method: 'DELETE' })
-            .then(res => res.json()) 
-            this.props.setStateOfParent(this.props.name);
-    }
 
-    
+
 
     render() {
         return (
             <>
 
                 <tr>
-                    <td>{this.props.title}</td>
-                    <td>{this.props.date}</td>
-                    <td>{this.props.startDate}</td>
-                    <td>{this.props.program}</td>
-                    <td><NavLink to={`/courses/subscribers/${this.props.name}`}><button className="listBtn">List</button></NavLink> </td>
-                    <td><button className="deleteBtn" onClick={this.handleClick} >Delete</button> </td>
+                    <td>{this.props.email}</td>
+                    <td>
+                        <input type="number" min ="2" max="6"></input>
+                        <button className="saveBtn" >Save</button>
+                    </td>
                 </tr>
 
                 <style>
@@ -67,8 +58,8 @@ class TableCourseTheacher extends Component {
                         background-color:green;
                       }
 
-                      .deleteBtn{
-                        background-color:red;
+                      .unscribeBtn{
+                        background-color:orange;
                       }
               `}
                 </style>
@@ -78,4 +69,4 @@ class TableCourseTheacher extends Component {
 
 };
 
-export default TableCourseTheacher;
+export default GradeListAdd;
