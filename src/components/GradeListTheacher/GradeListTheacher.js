@@ -13,6 +13,8 @@ class GradeListTheacher extends Component {
     
 
     render() {
+
+        
         return (
             <>
 
@@ -28,11 +30,12 @@ class GradeListTheacher extends Component {
                             {
                                 this.props.subscribers?.map((item) =>
                                     <GradeListAdd
-                                        key={this.props.title + item.email}
+                                        key={this.props.name + item.email}
+                                        name = {this.props.name + item.email}
                                         email = {item.email}
-                                        name={item.id}
+                                        id={this.props.name}
                                         title={item.title}
-                                        date={item.date}
+                                        date={this.props.date}
                                         setStateOfParent={this.setStateOfParent}
                                      ></GradeListAdd>
 
@@ -51,7 +54,7 @@ class GradeListTheacher extends Component {
 
                     td{
                         border: 1px solid #dddddd;
-                        text-align: right;
+                        text-align: center;
                         padding: 8px;
                     }
 

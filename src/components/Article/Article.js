@@ -55,6 +55,12 @@ const Article = (props) => {
                         text-overflow: ellipsis;
                     }
 
+                    b{
+                        overflow: hidden;
+                        white-space: nowrap; /* Don't forget this one */
+                        text-overflow: ellipsis;
+                    }
+
                    
               `}
             </style>

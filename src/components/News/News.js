@@ -93,7 +93,7 @@ class News extends Component {
 
                     <div>All posted news</div>
 
-                    <table>
+                   <table>
                         <thead>
                             <tr>
                                 <th>Title</th>
@@ -110,7 +110,7 @@ class News extends Component {
                                         title={item.title}
                                         date={item.date}
                                         setStateOfParent={this.setStateOfParent}
-                                    ></TableNews>
+                                     ></TableNews>
 
                                 )}
                         </tbody>

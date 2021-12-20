@@ -29,6 +29,8 @@ const AddGrade = (props, authInfo) => {
             })
     }, [])
 
+    console.log(allCourses)
+
     return (
         <>
             <main>
@@ -41,6 +43,8 @@ const AddGrade = (props, authInfo) => {
                             key={item.id}
                             name={item.id}
                             title={item.title}
+                            date={item.date}
+                            createdBy={item.createdBy}
                             subscribers={item.subscribers}
                         ></GradeListTheacher>
 

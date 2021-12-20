@@ -46,6 +46,8 @@ class Courses extends Component {
                     });
                     
                 }
+                console.log(ownCourses)
+                console.log(array)
                 this.setState({ courses: array, ownCourses: ownCourses })
             })
 

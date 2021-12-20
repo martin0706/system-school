@@ -115,6 +115,10 @@ const Header = ({ user, isAuth, authInfo }) => {
                     color: black;
                   }
 
+                  center{
+                      color: black;
+                  }
+
                 
               `}
             </style>

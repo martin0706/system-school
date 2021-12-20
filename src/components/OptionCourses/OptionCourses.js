@@ -23,10 +23,10 @@ class OptionCourses extends Component {
                    
                     data.subscribers.push({"uid": user.uid, "email": user.email});
                 }else{
-                    console.log(data)
+                   // console.log(data)
 
                     for(const obj in data ){
-                        console.log(obj);
+                       // console.log(obj);
                     }
 
                     data = {...data,subscribers:[{"uid":user.uid, "email": user.email}]}

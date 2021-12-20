@@ -47,13 +47,13 @@ const Register = () => {
                 <form onSubmit={onRegisterSubmitHandler}>
 
 
-                    <label for="username"><b>Email</b></label>
+                    <label htmlFor="username"><b>Email</b></label>
                     <input type="text" placeholder="Enter Email" name="username" required />
 
-                    <label for="password"><b>Password</b></label>
+                    <label htmlFor="password"><b>Password</b></label>
                     <input type="password" placeholder="Enter Password" name="password" required />
 
-                    <label for="confirmPsw"><b>Confirm password</b></label>
+                    <label htmlFor="confirmPsw"><b>Confirm password</b></label>
                     <input type="password" placeholder="Confirm Password" name="confirmPsw" required />
 
 
