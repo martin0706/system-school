@@ -36,7 +36,7 @@ class GradeListTheacher extends Component {
                                         id={this.props.name}
                                         title={item.title}
                                         date={this.props.date}
-                                        setStateOfParent={this.setStateOfParent}
+                                        onChange ={this.props.onChange}
                                      ></GradeListAdd>
 
                                 )}

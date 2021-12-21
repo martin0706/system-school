@@ -22,7 +22,6 @@ class Grades extends Component {
             .then(res => res.json())
             .then(items => {
                 const array = [];
-
                 if (items) {
                     Object.keys(items).forEach((key) => {
                        
@@ -30,13 +29,13 @@ class Grades extends Component {
                             for(const obj in items[key].subscribers){
 
                                 if(items[key].subscribers[obj].uid == this.state.userUid){
-                                    array.push({ "id": [key][0], "title" :items[key].title,"grade": items[key].subscribers[obj].grade,"email":items[key].subscribers[obj].email })
+                                    array.push({ "id": [key][0],"createdBy": items[key].createdBy  ,"title" :items[key].title,"grade": items[key].subscribers[obj].grade,"email":items[key].subscribers[obj].email })
                                 }
                             }
                         }
 
                     });
-                    console.log(array)
+    
                     this.setState({ courses: array })
                 }
             })
@@ -70,7 +69,7 @@ class Grades extends Component {
                                         name={item.id}
                                         title={item.title}
                                         grade={item.grade}
-                                        email={item.email}
+                                        email={item.createdBy}
                                     ></TableGrades>
 
                                 )}

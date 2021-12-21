@@ -5,7 +5,7 @@ import GradeListTheacher from "../GradeListTheacher/GradeListTheacher"
 
 const AddGrade = (props, authInfo) => {
     const [allCourses, setAllCourses] = useState([]);
-    const location = useLocation();
+
 
     useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user'));
@@ -17,9 +17,13 @@ const AddGrade = (props, authInfo) => {
                 if (data) {
                     Object.keys(data).forEach((key) => {
                         console.log(data[key].createdBy == user.email)
+                        
+                         let filterSubscribe = data[key].subscribers.filter(x=>!Object.hasOwn(x, 'grade'));
+                         let newData = { "createdBy": data[key].createdBy, "date": data[key].date, "program": data[key].program, "startDate": data[key].startDate, "subscribers": filterSubscribe, "title": data[key].title };
 
+                        console.log(filterSubscribe);
                         if (data[key].createdBy == user.email) {
-                            array.push({ "id": [key][0], ...data[key] });
+                            array.push({ "id": [key][0], ...newData });
                         }
                     });
 
@@ -29,9 +33,27 @@ const AddGrade = (props, authInfo) => {
             })
     }, [])
 
-    console.log(allCourses)
+
+    function handleChange(id, email) {
+
+        console.log(id, email);
+
+        
+        allCourses.forEach((course) => {
+                course.subscribers.forEach((obj, index) => {
+                    if (obj.email == email && course.id==id) {
+                        course.subscribers.splice(index, 1);
+                    }
+                });
+            
+        });
+
+        let filteredSubscribers = allCourses;
+        setAllCourses([...filteredSubscribers]);
+    }
 
     return (
+
         <>
             <main>
 
@@ -46,6 +68,7 @@ const AddGrade = (props, authInfo) => {
                             date={item.date}
                             createdBy={item.createdBy}
                             subscribers={item.subscribers}
+                            onChange={handleChange}
                         ></GradeListTheacher>
 
 

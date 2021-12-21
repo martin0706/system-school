@@ -8,33 +8,42 @@ const GradeListAdd = (props) => {
 
 
     useEffect(() => {
-
+        
 
     }, [])
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log(props.id);
-        console.log(document.getElementById(props.name).value);
+        //console.log(props.id);
+       let grade = document.getElementById(props.name).value;
         fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${props.id}.json`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-
-                data.subscribers.forEach(element => {
-                    console.log(element)
+            
+                if(grade){
+                let newObjdSubscribers = [];
+                data.subscribers.forEach(obj => {
+                    if(obj.email == props.email){
+                        newObjdSubscribers.push({...obj, "grade": grade}) 
+                    }else{
+                        newObjdSubscribers.push(obj)
+                    }
                 });
 
-               // let newData = { "createdBy": data.createdBy, "date": data.date, "program": data.program, "startDate": data.startDate, "subscribers": newObjdSubscriber, "title": data.title };
 
-                //console.log(data);
-                // fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${props.id}.json`, {
-                //     method: 'PUT', // or 'PUT'
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify(newData),
-                // }).then(response => { response.json() })
+               let newData = { "createdBy": data.createdBy, "date": data.date, "program": data.program, "startDate": data.startDate, "subscribers": newObjdSubscribers, "title": data.title };
+
+                console.log(data);
+                fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${props.id}.json`, {
+                    method: 'PUT', // or 'PUT'
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newData),
+                }).then(response => { response.json() })
+    
+                props.onChange(props.id,props.email);
+            }
             
     })
 }
@@ -49,7 +58,7 @@ return (
             <td>{props.email}</td>
             <td>
                 <input id={props.name} name="grade" type="number" min="2" max="6"></input>
-                <button onClick={handleClick} className="saveBtn" >Save</button>
+                <button onClick={handleClick}  className="saveBtn" >Save</button>
             </td>
         </tr>
 

@@ -35,19 +35,23 @@ class Courses extends Component {
                         if (!("subscribers" in items[key])) {
                             array.push({ "id": [key][0], ...items[key] });
                         } else {
+                            let uidIsFound = false;
                             for (const obj in items[key].subscribers) {
-                                if (items[key].subscribers[obj].uid != this.state.userUid) {
+                                
+                               if (items[key].subscribers[obj].uid == this.state.userUid){
+                                  uidIsFound = true;
+                               }
+                            }
+
+                             if (!uidIsFound) {
                                     array.push({ "id": [key][0], ...items[key] });
                                 }else{
                                     ownCourses.push({ "id": [key][0], ...items[key] })
                                 }
-                            }
                         }
                     });
                     
                 }
-                console.log(ownCourses)
-                console.log(array)
                 this.setState({ courses: array, ownCourses: ownCourses })
             })
 
@@ -56,6 +60,7 @@ class Courses extends Component {
     setStateOfParentFormSubscribe = (id) => {
         let course = this.state.courses.filter((obj)=>obj.id == id);
         this.state.ownCourses.push(course[0]);
+        console.log(this.state.courses,id);
         this.setState({ courses: this.state.courses.filter(item => item.id != id)});
     }
 
