@@ -4,7 +4,7 @@ import { useEffect } from 'react/cjs/react.development';
 import GradeListTheacher from "../GradeListTheacher/GradeListTheacher"
 
 const AddGrade = (props, authInfo) => {
-    const [allCourses, setAllCourses] = useState([]);
+    let [allCourses, setAllCourses] = useState([]);
 
 
     useEffect(() => {
@@ -13,22 +13,38 @@ const AddGrade = (props, authInfo) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                const array = [];
+                let array = [];
                 if (data) {
-                    Object.keys(data).forEach((key) => {
-                        console.log(data[key].createdBy == user.email)
-                        
-                         let filterSubscribe = data[key].subscribers.filter(x=>!Object.hasOwn(x, 'grade'));
-                         let newData = { "createdBy": data[key].createdBy, "date": data[key].date, "program": data[key].program, "startDate": data[key].startDate, "subscribers": filterSubscribe, "title": data[key].title };
 
-                        console.log(filterSubscribe);
-                        if (data[key].createdBy == user.email) {
-                            array.push({ "id": [key][0], ...newData });
+                    Object.keys(data).forEach((key) => {
+
+                        if (Object.hasOwn(data[key],"subscribers")) {
+                            console.log("in")
+                            let filterSubscribe = data[key].subscribers.filter(x => !Object.hasOwn(x, 'grade'));
+                            let newData = { "createdBy": data[key].createdBy, "date": data[key].date, "program": data[key].program, "startDate": data[key].startDate, "subscribers": filterSubscribe, "title": data[key].title };
+
+                            console.log(data[key].createdBy == user.email);
+                            if (data[key].createdBy == user.email) {
+                                array.push({ "id": [key][0], ...newData });
+
+                            }
                         }
                     });
 
                 }
 
+                
+                array = array.filter(item => {
+                    let filter = false
+                    if(item.subscribers) {
+                        item.subscribers.forEach(subscriber => {
+                            filter = !subscriber.grade
+                        })
+                    }
+                    return filter
+                })
+
+                console.log(array)
                 setAllCourses(array);
             })
     }, [])
@@ -38,15 +54,25 @@ const AddGrade = (props, authInfo) => {
 
         console.log(id, email);
 
-        
+
         allCourses.forEach((course) => {
-                course.subscribers.forEach((obj, index) => {
-                    if (obj.email == email && course.id==id) {
-                        course.subscribers.splice(index, 1);
-                    }
-                });
-            
+            course.subscribers.forEach((obj, index) => {
+                if (obj.email == email && course.id == id) {
+                    course.subscribers.splice(index, 1);
+                }
+            });
+
         });
+
+        allCourses = allCourses.filter(item => {
+            let filter = false
+            if(item.subscribers) {
+                item.subscribers.forEach(subscriber => {
+                    filter = !subscriber.grade
+                })
+            }
+            return filter
+        })
 
         let filteredSubscribers = allCourses;
         setAllCourses([...filteredSubscribers]);
@@ -55,7 +81,10 @@ const AddGrade = (props, authInfo) => {
     return (
 
         <>
+
             <main>
+
+
 
                 <div><b>All users without grade</b></div>
 
@@ -73,6 +102,8 @@ const AddGrade = (props, authInfo) => {
 
 
                     )}
+
+
 
             </main>
 

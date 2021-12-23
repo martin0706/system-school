@@ -6,7 +6,7 @@ const Article = (props) => {
     return (
         <>
             <article className="article">
-                <b><NavLink to ={`/news/details/${props.newsId}`}>{props.title}</NavLink></b>
+                <b><NavLink className = "titleNews" to ={`/news/details/${props.newsId}`}>{props.title}</NavLink></b>
                 <label className="date">Publication date:</label><span className="date">{props.date}</span>
                 <p>{props.description}</p>
                 <label className="label-post">Posted by:</label><span className="label-post">{props.postedBy}</span>
@@ -55,10 +55,11 @@ const Article = (props) => {
                         text-overflow: ellipsis;
                     }
 
-                    b{
+                    .titleNews{
                         overflow: hidden;
                         white-space: nowrap; /* Don't forget this one */
                         text-overflow: ellipsis;
+                        display:block;
                     }
 
                    

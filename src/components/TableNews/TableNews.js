@@ -8,6 +8,7 @@ class TableNews extends Component {
         super(props)
        
         this.handleClick.bind(this)
+       
     }
 
     handleClick = (e) => {
@@ -17,16 +18,20 @@ class TableNews extends Component {
             this.props.setStateOfParent(this.props.name);
     }
 
+
     render() {
+
+
         return (
             <>
 
                 <tr>
-                    <td>{this.props.title}</td>
-                    <td>{this.props.date}</td>
+                    <td >{this.props.title}</td>
+                    <td >{this.props.date}</td>
                     <td>
                         <NavLink to={`/news/details/${this.props.name}`}><button className="detailsBtn">Details</button></NavLink>
                         <button className="deleteBtn" onClick={this.handleClick} >Delete</button>
+                        <button className="editBtn" onClick={this.handleChange}>Edit</button>
                     </td>
                 </tr>
 
@@ -52,6 +57,10 @@ class TableNews extends Component {
                    
                       .deleteBtn{
                         background-color:red;
+                      }
+
+                      .editBtn{
+                        background-color:green;
                       }
               `}
                 </style>

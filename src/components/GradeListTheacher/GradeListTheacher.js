@@ -10,10 +10,10 @@ class GradeListTheacher extends Component {
     }
 
     
-    
+   
 
     render() {
-
+        console.log(this.props);
         
         return (
             <>
