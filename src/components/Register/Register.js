@@ -2,6 +2,7 @@ import firebase from "../../utils/firebase";
 import 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
+
 const Register = () => {
     const navigate = useNavigate();
 
@@ -11,17 +12,17 @@ const Register = () => {
         const username = e.target.username.value;
         const password = e.target.password.value;
         const confirmPsw = e.target.confirmPsw.value;
+        const typeProfil = e.target.typeProfil.value;
 
         if(password == confirmPsw){
             firebase.auth().createUserWithEmailAndPassword(username,password)
-            .then((res) =>{
-                  
+            .then(async (res) =>  {
                 fetch('https://system-school-7931c-default-rtdb.firebaseio.com/users.json', {
                     method: 'POST', // or 'PUT'
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({"id": res.user.uid, "email": res.user.email}),
+                    body: JSON.stringify({"id": res.user.uid, "email": res.user.email , "typeProfil" : typeProfil}),
                 })
                     .then(response => response.json())
                     .then(item => {
@@ -45,6 +46,12 @@ const Register = () => {
             <main>
 
                 <form onSubmit={onRegisterSubmitHandler}>
+
+                    <label htmlFor="typeProfil" id="typeProfil"><b>Choose profil type-Theacher or Student: </b></label>
+                    <select name="typeProfil">
+                        <option value="Theacher">Theacher</option>
+                        <option value="Student">Student</option>
+                    </select>
 
 
                     <label htmlFor="username"><b>Email</b></label>

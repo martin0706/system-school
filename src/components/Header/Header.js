@@ -21,27 +21,35 @@ const Header = ({ user, isAuth, authInfo }) => {
 
     }
 
-    
-   /* useEffect(async () => {
-        const response = await fetch("https://system-school-7931c-default-rtdb.firebaseio.com/users.json")
-        const items = await response.json();
+    useEffect(() => {
+
+        return () => {
+            console.log(isAuth);
+            debugger;
+            // if (updateTimer.current) {
+            //   clearTimeout(updateTimer.current);
+            // }
+          };
+//         debugger;
+//         const response = await fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/users.json?id=${authInfo.uid}`)
+//         const items = await response.json();
         
-          console.log(items);
-          Object.keys(items).forEach((key) => {
-            console.log(items[key].id == authInfo.uid);
+//           console.log(items);
+//           Object.keys(items).forEach((key) => {
+//             console.log(items[key].id == authInfo.uid);
 
-            if (items[key].id == authInfo.uid) {
-
-                setTypeUser(items[key].typeUser);
+//             if (items[key].id == authInfo.uid) {
+// debugger;
+//                 setTypeUser(items[key].typeUser);
                
-            }
+//             }
 
-        });
+//         });
 
-        console.log(typeUser);
-      }, []);*/
+//         console.log(typeUser);
+      }, []);
 
-    const theacherUIDs = ["56etcyNrh6QytJHR2Z9NjeO1Epm2","9s0spYnCSRZJTLglzhPeCddI4rr1","vhdR8yIFSXb9KIehNk5JUQzdpN73" ]
+    const teacherUIDs = ["o5gvvG88eWR4PrGhCrTBtMqwhL12","TT7wrUwnBuU05G2CrorWP0AmgR92","DpUc5MIyx2gvMQaSW0BHHKoW1dm2" ]
     
     
    
@@ -57,12 +65,12 @@ const Header = ({ user, isAuth, authInfo }) => {
                     <span className="auth">
                         <img src="https://banner2.cleanpng.com/20180613/hgy/kisspng-computer-icons-college-square-academic-cap-school-5b213a5f3a9062.5537646415289042872399.jpg" />
                         <NavLink to="/" >Home</NavLink>
-                        {isAuth && theacherUIDs.includes(authInfo.uid) ? <NavLink to="/news"  >News</NavLink> : null}
-                        {isAuth  && theacherUIDs.includes(authInfo.uid) ? <NavLink to="/courses/create">Create course</NavLink> : null}
-                        {isAuth  && theacherUIDs.includes(authInfo.uid) ? <NavLink to="/grades/add" >Add Grade</NavLink> : null}
+                        {isAuth && teacherUIDs.includes(authInfo.uid) ? <NavLink to="/news"  >News</NavLink> : null}
+                        {isAuth  && teacherUIDs.includes(authInfo.uid) ? <NavLink to="/courses/create">Create course</NavLink> : null}
+                        {isAuth  && teacherUIDs.includes(authInfo.uid) ? <NavLink to="/grades/add" >Add Grade</NavLink> : null}
 
-                        {isAuth && !theacherUIDs.includes(authInfo.uid) ? <NavLink to="/courses" >Courses</NavLink> : null}
-                        {isAuth  && !theacherUIDs.includes(authInfo.uid) ? <NavLink to="/grades"  >Grades</NavLink> : null}
+                        {isAuth && !teacherUIDs.includes(authInfo.uid) ? <NavLink to="/courses" >Courses</NavLink> : null}
+                        {isAuth  && !teacherUIDs.includes(authInfo.uid) ? <NavLink to="/grades"  >Grades</NavLink> : null}
 
                         {isAuth ? null : <NavLink to="/login" >Login</NavLink>}
                         {isAuth ? null : <NavLink to="/register" >Register</NavLink>}

@@ -6,10 +6,16 @@ class TableNews extends Component {
 
     constructor({props,user}) {
         super(props)
-       
-        this.handleClick.bind(this)
-       
+        
+        this.state = { editButtonIsClicked:false}
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSave = this.handleSave.bind(this);
+        
     }
+
+  
+
+    
 
     handleClick = (e) => {
         e.preventDefault();
@@ -17,6 +23,15 @@ class TableNews extends Component {
             .then(res => res.json()) 
             this.props.setStateOfParent(this.props.name);
     }
+
+    handleChange(){
+       this.setState({editButtonIsClicked:true});
+    }
+
+    handleSave(){
+        this.setState({editButtonIsClicked:false});
+    }
+
 
 
     render() {
@@ -26,12 +41,14 @@ class TableNews extends Component {
             <>
 
                 <tr>
-                    <td >{this.props.title}</td>
-                    <td >{this.props.date}</td>
+                  <td >{this.props.date}</td>
+                  {  this.state.editButtonIsClicked ? <td ><input type ="text" defaultValue = {this.props.title} /></td> : <td >{this.props.title}</td> }
+                  {  this.state.editButtonIsClicked ?  <td ><input type ="text" defaultValue = {this.props.description} /></td> :<td >{this.props.description}</td>}
                     <td>
-                        <NavLink to={`/news/details/${this.props.name}`}><button className="detailsBtn">Details</button></NavLink>
-                        <button className="deleteBtn" onClick={this.handleClick} >Delete</button>
-                        <button className="editBtn" onClick={this.handleChange}>Edit</button>
+                    {  this.state.editButtonIsClicked ? null: <NavLink to={`/news/details/${this.props.name}`}><button className="detailsBtn">Details</button></NavLink> }
+                    {  this.state.editButtonIsClicked ? null  : <button className="deleteBtn" onClick={this.handleClick} >Delete</button>}
+                    {  this.state.editButtonIsClicked ? null : <button className="editBtn" onClick={this.handleChange}>Edit</button>}
+                    {  this.state.editButtonIsClicked ? <button className="saveBtn" onClick={this.handleSave}>Save</button> : null}
                     </td>
                 </tr>
 
@@ -61,6 +78,10 @@ class TableNews extends Component {
 
                       .editBtn{
                         background-color:green;
+                      }
+
+                      .saveBtn{
+                        background-color:brown;
                       }
               `}
                 </style>

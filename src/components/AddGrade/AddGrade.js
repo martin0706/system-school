@@ -1,7 +1,7 @@
 import { useEfect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react/cjs/react.development';
-import GradeListTheacher from "../GradeListTheacher/GradeListTheacher"
+import GradeListTeacher from "../GradeListTeacher/GradeListTeacher"
 
 const AddGrade = (props, authInfo) => {
     let [allCourses, setAllCourses] = useState([]);
@@ -19,7 +19,7 @@ const AddGrade = (props, authInfo) => {
                     Object.keys(data).forEach((key) => {
 
                         if (Object.hasOwn(data[key],"subscribers")) {
-                            console.log("in")
+                           
                             let filterSubscribe = data[key].subscribers.filter(x => !Object.hasOwn(x, 'grade'));
                             let newData = { "createdBy": data[key].createdBy, "date": data[key].date, "program": data[key].program, "startDate": data[key].startDate, "subscribers": filterSubscribe, "title": data[key].title };
 
@@ -44,7 +44,6 @@ const AddGrade = (props, authInfo) => {
                     return filter
                 })
 
-                console.log(array)
                 setAllCourses(array);
             })
     }, [])
@@ -90,7 +89,7 @@ const AddGrade = (props, authInfo) => {
 
                 {
                     allCourses?.map((item) =>
-                        <GradeListTheacher
+                        <GradeListTeacher
                             key={item.id}
                             name={item.id}
                             title={item.title}
@@ -98,7 +97,7 @@ const AddGrade = (props, authInfo) => {
                             createdBy={item.createdBy}
                             subscribers={item.subscribers}
                             onChange={handleChange}
-                        ></GradeListTheacher>
+                        ></GradeListTeacher>
 
 
                     )}

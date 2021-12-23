@@ -16,7 +16,7 @@ class News extends Component {
             name: "",
             status: "",
             hasNews: false,
-            email: user?.email
+            email: user?.email,
         }
 
 
@@ -102,8 +102,9 @@ class News extends Component {
                    <table>
                         <thead>
                             <tr>
+                                <th>Publication date</th>
                                 <th>Title</th>
-                                <th>Date</th>
+                                <th>Description</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -114,6 +115,7 @@ class News extends Component {
                                         key={item.id}
                                         name={item.id}
                                         title={item.title}
+                                        description={item.description}
                                         date={item.date}
                                         setStateOfParent={this.setStateOfParent}
                                         handleChange={this.handleChange}

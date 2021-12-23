@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-class TableCourseTheacher extends Component {
+class TableCourseTeacher extends Component {
 
     constructor(props) {
         super(props)
@@ -78,4 +78,4 @@ class TableCourseTheacher extends Component {
 
 };
 
-export default TableCourseTheacher;
+export default TableCourseTeacher;

@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import TableCourseTheacher from '../TableCourseTheacher/TableCourseTheacher';
+import TableCourseTeacher from '../TableCourseTeacher/TableCourseTeacher';
 
 class CreateCourse extends Component {
 
@@ -112,7 +112,7 @@ class CreateCourse extends Component {
                         <tbody>
                             {
                                 this.state.courses?.map((item) =>
-                                    <TableCourseTheacher
+                                    <TableCourseTeacher
                                         key={item.id}
                                         name={item.id}
                                         title={item.title}
@@ -120,7 +120,7 @@ class CreateCourse extends Component {
                                         date={item.date}
                                         program={item.program}
                                         setStateOfParent={this.setStateOfParent}
-                                    ></TableCourseTheacher>
+                                    ></TableCourseTeacher>
 
                                 )}
                         </tbody>

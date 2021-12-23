@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import GradeListAdd from '../GradeListAdd/GradeListAdd';
 
-class GradeListTheacher extends Component {
+class GradeListTeacher extends Component {
 
     constructor(props) {
         super(props)
@@ -85,4 +85,4 @@ class GradeListTheacher extends Component {
 
 };
 
-export default GradeListTheacher;
+export default GradeListTeacher;
