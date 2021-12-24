@@ -27,7 +27,6 @@ function App(props) {
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((authUser) => {
-            debugger
             if (authUser) {
                 setUser(authUser);
             } else {

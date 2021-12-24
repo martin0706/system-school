@@ -9,7 +9,6 @@ class News extends Component {
     constructor({ props, user }) {
         super(props)
         this.setStateOfParent.bind(this);
-        this.handleChange.bind(this);
 
         this.state = {
             news: [],
@@ -71,9 +70,7 @@ class News extends Component {
 
     }
 
-    handleChange(event) {
-       console.log("changed")
-      }
+    
 
     render() {
 
@@ -117,8 +114,8 @@ class News extends Component {
                                         title={item.title}
                                         description={item.description}
                                         date={item.date}
+                                        postedBy={item.postedBy}
                                         setStateOfParent={this.setStateOfParent}
-                                        handleChange={this.handleChange}
                                      ></TableNews>
 
                                 )}

@@ -12,7 +12,7 @@ class TableCourseTeacher extends Component {
 
     handleClick = (e) => {
         e.preventDefault();
-        console.log(this.props.news);
+        
         fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses/${this.props.name}.json`, { method: 'DELETE' })
             .then(res => res.json()) 
             this.props.setStateOfParent(this.props.name);

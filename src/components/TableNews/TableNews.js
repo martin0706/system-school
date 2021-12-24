@@ -7,17 +7,13 @@ class TableNews extends Component {
     constructor({props,user}) {
         super(props)
         
-        this.state = { editButtonIsClicked:false}
+        this.state = { editButtonIsClicked:false, description: null, title:null}
         this.handleChange = this.handleChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
         
     }
 
-  
-
-    
-
-    handleClick = (e) => {
+  handleClick = (e) => {
         e.preventDefault();
         fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/news/${this.props.name}.json`, { method: 'DELETE' })
             .then(res => res.json()) 
@@ -28,8 +24,27 @@ class TableNews extends Component {
        this.setState({editButtonIsClicked:true});
     }
 
-    handleSave(){
-        this.setState({editButtonIsClicked:false});
+    handleSave(e){
+        
+
+        let titleValue = document.getElementById(`t-${this.props.name}`).value;
+        let descriptionValue = document.getElementById(`d-${this.props.name}`).value;
+        this.setState({editButtonIsClicked:false,description: descriptionValue, title: titleValue});
+
+        console.log(titleValue,descriptionValue)
+
+        let data = { "title": titleValue, "description":descriptionValue, "date": this.props.date, "postedBy": this.props.postedBy };
+        
+
+        fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/news/${this.props.name}.json`, {
+          method: 'PUT', // or 'PUT'
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+      }).then(response => { response.json() })
+      
+ 
     }
 
 
@@ -42,8 +57,8 @@ class TableNews extends Component {
 
                 <tr>
                   <td >{this.props.date}</td>
-                  {  this.state.editButtonIsClicked ? <td ><input type ="text" defaultValue = {this.props.title} /></td> : <td >{this.props.title}</td> }
-                  {  this.state.editButtonIsClicked ?  <td ><input type ="text" defaultValue = {this.props.description} /></td> :<td >{this.props.description}</td>}
+                  {  this.state.editButtonIsClicked ? <td ><input id={`t-${this.props.name}`} type ="text" defaultValue = {this.state.title ||this.props.title} /></td> : <td >{this.state.title || this.props.title}</td> }
+                  {  this.state.editButtonIsClicked ?  <td ><input id={`d-${this.props.name}`} type ="text" defaultValue = {this.state.description ||this.props.description} /></td> :<td >{this.state.description || this.props.description}</td>}
                     <td>
                     {  this.state.editButtonIsClicked ? null: <NavLink to={`/news/details/${this.props.name}`}><button className="detailsBtn">Details</button></NavLink> }
                     {  this.state.editButtonIsClicked ? null  : <button className="deleteBtn" onClick={this.handleClick} >Delete</button>}
