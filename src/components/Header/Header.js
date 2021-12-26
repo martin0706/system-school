@@ -21,33 +21,24 @@ const Header = ({ user, isAuth, authInfo }) => {
 
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        return () => {
-            console.log(isAuth);
-            debugger;
-            // if (updateTimer.current) {
-            //   clearTimeout(updateTimer.current);
-            // }
-          };
-//         debugger;
-//         const response = await fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/users.json?id=${authInfo.uid}`)
-//         const items = await response.json();
+    //     const response = await fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/users.json?id=${authInfo.uid}`)
+    //     const items = await response.json();
         
-//           console.log(items);
-//           Object.keys(items).forEach((key) => {
-//             console.log(items[key].id == authInfo.uid);
+    //       console.log(items);
+    //       Object.keys(items).forEach((key) => {
+    //         console.log(items[key].id == authInfo.uid);
 
-//             if (items[key].id == authInfo.uid) {
-// debugger;
-//                 setTypeUser(items[key].typeUser);
+    //         if (items[key].id == authInfo.uid) {
+    //             setTypeUser(items[key].typeUser);
                
-//             }
+    //         }
 
-//         });
+    //     });
 
-//         console.log(typeUser);
-      }, []);
+    //     console.log(typeUser);
+    //   }, []);
 
     const teacherUIDs = ["o5gvvG88eWR4PrGhCrTBtMqwhL12","TT7wrUwnBuU05G2CrorWP0AmgR92","DpUc5MIyx2gvMQaSW0BHHKoW1dm2" ]
     
