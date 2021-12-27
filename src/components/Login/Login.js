@@ -1,10 +1,13 @@
 import firebase from "../../utils/firebase";
+import { Component, useState } from 'react';
 import 'firebase/auth';
 import { useNavigate } from "react-router-dom";
+import ErrorComponent from "../ErrorComponent/ErrorComponent"
 
 const Login = () => {
     const navigate = useNavigate();
-   
+    var [msgError, setMsgError] = useState("");
+
     const onLoginSubmitHandler =(e)=>{
         e.preventDefault();
 
@@ -16,7 +19,7 @@ const Login = () => {
         .then((userCredential) =>{
               e.target.reset();
               navigate('/');
-        })
+        }).catch(error=> setMsgError(error.message))
 
         
     };
@@ -24,8 +27,10 @@ const Login = () => {
     return (
         <>
             <main>
-
+                
                 <form onSubmit={onLoginSubmitHandler}>
+
+                {msgError ? <ErrorComponent msgText ={msgError}></ErrorComponent> : null}
 
                     <label htmlFor="username"><b>Username</b></label>
                     <input type="text" placeholder="Enter Username" name="username" required />

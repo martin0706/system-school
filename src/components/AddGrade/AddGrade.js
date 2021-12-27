@@ -12,7 +12,6 @@ const AddGrade = (props, authInfo) => {
         fetch(`https://system-school-7931c-default-rtdb.firebaseio.com/courses.json`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 let array = [];
                 if (data) {
 
@@ -23,7 +22,6 @@ const AddGrade = (props, authInfo) => {
                             let filterSubscribe = data[key].subscribers.filter(x => !Object.hasOwn(x, 'grade'));
                             let newData = { "createdBy": data[key].createdBy, "date": data[key].date, "program": data[key].program, "startDate": data[key].startDate, "subscribers": filterSubscribe, "title": data[key].title };
 
-                            console.log(data[key].createdBy == user.email);
                             if (data[key].createdBy == user.email) {
                                 array.push({ "id": [key][0], ...newData });
 

@@ -1,10 +1,12 @@
 import firebase from "../../utils/firebase";
 import 'firebase/auth';
 import { useNavigate } from "react-router-dom";
-
+import { Component, useState } from 'react';
+import ErrorComponent from "../ErrorComponent/ErrorComponent"
 
 const Register = () => {
     const navigate = useNavigate();
+    var [msgError, setMsgError] = useState("");
 
     const onRegisterSubmitHandler = (e)=>{
         e.preventDefault();
@@ -27,25 +29,26 @@ const Register = () => {
                     .then(item => {
                         console.log(item)
                     })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
+
 
                   e.target.reset();
                   navigate('/');
-            })
+            }).catch((error) => {
+                setMsgError(error.message);
+            });
 
         }else{
-            console.log("Invalid credentional");
+            setMsgError("Password is not confirmed");
         }
     }
 
     return (
         <>
+         
             <main>
-
+                
                 <form onSubmit={onRegisterSubmitHandler}>
-
+                {msgError ? <ErrorComponent msgText ={msgError}></ErrorComponent> : null}
 
                     <label htmlFor="username"><b>Email</b></label>
                     <input type="text" placeholder="Enter Email" name="username" required />

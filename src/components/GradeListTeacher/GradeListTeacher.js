@@ -13,7 +13,6 @@ class GradeListTeacher extends Component {
    
 
     render() {
-        console.log(this.props);
         
         return (
             <>
@@ -74,7 +73,7 @@ class GradeListTeacher extends Component {
                       }
                    
                   .title{
-                      color:red;
+                      color:green;
                   }
                       
               `}
